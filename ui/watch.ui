@@ -68,6 +68,38 @@
       </layout>
      </item>
      <item>
+      <widget class="QLabel" name="logoLabel_3">
+       <property name="minimumSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border-radius:10px
+</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>../img/logo1.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+       <property name="margin">
+        <number>8</number>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="verticalSpacer">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
@@ -135,7 +167,7 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QFrame" name="opFrame">
+    <widget class="QFrame" name="menuBar">
      <property name="geometry">
       <rect>
        <x>0</x>
@@ -220,62 +252,6 @@ border-radius:10px</string>
        <string>00:00:00</string>
       </property>
      </widget>
-     <widget class="QFrame" name="ppFrame">
-      <property name="geometry">
-       <rect>
-        <x>370</x>
-        <y>30</y>
-        <width>131</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <widget class="QPushButton" name="pauseBtn">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>0</y>
-         <width>41</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset>
-         <normaloff>../img/pause-solid.svg</normaloff>../img/pause-solid.svg</iconset>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="playBtn">
-       <property name="geometry">
-        <rect>
-         <x>70</x>
-         <y>0</y>
-         <width>41</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset>
-         <normaloff>../img/play-solid.svg</normaloff>../img/play-solid.svg</iconset>
-       </property>
-      </widget>
-     </widget>
      <widget class="QSlider" name="volumeBar">
       <property name="geometry">
        <rect>
@@ -313,6 +289,46 @@ border-radius:10px</string>
         <width>30</width>
         <height>20</height>
        </size>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pauseBtn">
+      <property name="geometry">
+       <rect>
+        <x>430</x>
+        <y>30</y>
+        <width>41</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>../img/pause-solid.svg</normaloff>../img/pause-solid.svg</iconset>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="playBtn">
+      <property name="geometry">
+       <rect>
+        <x>430</x>
+        <y>30</y>
+        <width>41</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>../img/play-solid.svg</normaloff>../img/play-solid.svg</iconset>
       </property>
      </widget>
     </widget>
