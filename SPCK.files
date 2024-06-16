@@ -1,0 +1,6 @@
+.qtc_clangd/compile_commands.json
+app.py
+app/file.txt
+data/file.txt
+img/file.txt
+ui/file.txt
