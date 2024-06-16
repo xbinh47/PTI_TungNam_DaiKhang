@@ -1,6 +1,14 @@
-.qtc_clangd/compile_commands.json
 app.py
+setup.py
+.qtc_clangd/compile_commands.json
 app/file.txt
 data/file.txt
 img/file.txt
+img/images.png
+img/movie.png
 ui/file.txt
+ui/signin.ui
+ui/sign_in.ui
+ui/sign_up.ui
+ui/sign_up.ui.autosave
+ui/thoingtinnguoidung.ui
