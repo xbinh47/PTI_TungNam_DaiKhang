@@ -136,7 +136,7 @@ border-radius:10px</string>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="searchButton">
+              <widget class="QPushButton" name="searchBtn">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -162,7 +162,7 @@ border-radius:10px</string>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="userButton">
+              <widget class="QPushButton" name="userBtn">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -242,7 +242,7 @@ background-color:rgb(65, 65, 65)</string>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="addButton">
+         <widget class="QPushButton" name="addBtn">
           <property name="minimumSize">
            <size>
             <width>100</width>
@@ -260,7 +260,7 @@ font: 700 10pt &quot;Segoe UI&quot;;
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="editButton">
+         <widget class="QPushButton" name="editBtn">
           <property name="minimumSize">
            <size>
             <width>100</width>
@@ -277,7 +277,7 @@ font: 700 10pt &quot;Segoe UI&quot;;</string>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="removeButton">
+         <widget class="QPushButton" name="removeBtn">
           <property name="minimumSize">
            <size>
             <width>100</width>
@@ -409,7 +409,7 @@ font: 700 10pt &quot;Segoe UI&quot;;</string>
            <string/>
           </property>
           <property name="pixmap">
-           <pixmap>../img/logo.png</pixmap>
+           <pixmap>../img/logo1.png</pixmap>
           </property>
           <property name="scaledContents">
            <bool>true</bool>
@@ -420,7 +420,7 @@ font: 700 10pt &quot;Segoe UI&quot;;</string>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="toggleButton">
+         <widget class="QPushButton" name="OptBtn">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
             <horstretch>0</horstretch>
