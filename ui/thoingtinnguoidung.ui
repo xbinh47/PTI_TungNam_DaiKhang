@@ -58,10 +58,10 @@ border-radius: 10px;</string>
    <widget class="QWidget" name="widget_2" native="true">
     <property name="geometry">
      <rect>
-      <x>9</x>
+      <x>19</x>
       <y>49</y>
-      <width>731</width>
-      <height>81</height>
+      <width>721</width>
+      <height>91</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -74,12 +74,12 @@ background-color: rgb(238, 238, 238);</string>
        <x>590</x>
        <y>20</y>
        <width>80</width>
-       <height>41</height>
+       <height>51</height>
       </rect>
      </property>
      <property name="font">
       <font>
-       <pointsize>11</pointsize>
+       <pointsize>15</pointsize>
        <italic>false</italic>
        <bold>true</bold>
        <underline>false</underline>
@@ -94,23 +94,84 @@ border-radius: 10px;</string>
       <string>Edit</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_2">
+    <widget class="QLabel" name="label_3">
      <property name="geometry">
       <rect>
-       <x>670</x>
-       <y>20</y>
-       <width>51</width>
-       <height>41</height>
+       <x>40</x>
+       <y>0</y>
+       <width>101</width>
+       <height>91</height>
       </rect>
      </property>
      <property name="text">
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>../../../GitHub/PTA_TungNam_DaiKhang/img/img/user-pen-solid.svg</pixmap>
+      <pixmap>../img/đã vẽ02.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="widget_3" native="true">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>160</y>
+      <width>711</width>
+      <height>351</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>7</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-radius: 10px;
+background-color: rgb(238, 238, 238);</string>
+    </property>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>10</y>
+       <width>201</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>13</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Personal Information</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="geometry">
+      <rect>
+       <x>570</x>
+       <y>10</y>
+       <width>111</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>13</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);
+border-radius: 10px;</string>
+     </property>
+     <property name="text">
+      <string>Edit</string>
      </property>
     </widget>
    </widget>
