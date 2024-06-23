@@ -125,12 +125,22 @@ class Watch(QMainWindow):
         self.audioOutput.setVolume(volume)
         if volume == 0.0:
             self.volumeBtn.setIcon(self.volumeOffIcon)
+        elif volume < 0.5:
+            self.volumeBtn.setIcon(self.volumeLowIcon)
+        else:
+            self.volumeBtn.setIcon(self.volumeHighIcon)
     
     def toggleMute(self):
         if self.audioOutput.isMuted():
             self.audioOutput.setMuted(False)
-            self.volumeBtn.setIcon(self.volumeHighIcon)
+            if self.current_volume >= 50:
+                self.volumeBtn.setIcon(self.volumeHighIcon)
+            elif self.current_volume < 50:
+                self.volumeBtn.setIcon(self.volumeLowIcon)
+            else:
+                self.volumeBtn.setIcon(self.volumeOffIcon)
             self.volumeBar.setValue(self.current_volume)
+            
         else:
             self.audioOutput.setMuted(True)
             self.volumeBtn.setIcon(self.muteIcon)
