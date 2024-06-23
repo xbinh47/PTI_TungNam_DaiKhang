@@ -1,14 +1,11 @@
-from PySide6 import QtWidgets
 import sys
 import os
-from PySide6.QtWidgets import QApplication, QMainWindow
-from PySide6.QtWidgets import QLabel, QPushButton, QSlider, QVBoxLayout, QListWidget, QWidget
-from PySide6.QtMultimedia import QMediaContent
-
+from PyQt6.QtWidgets import QMessageBox, QMainWindow, QListWidget, QListWidgetItem, QDialog, QPushButton, QTextEdit, QVBoxLayout, QApplication, QLabel, QSlider, QWidget
+from PyQt6.QtMultimedia import QMediaPlayer, QAudioOutput
+from PyQt6.QtMultimediaWidgets import QVideoWidget
+from PyQt6.QtCore import QUrl
+from PyQt6 import uic
 import cloudinary.uploader
-
-from PySide6.QtCore import QPropertyAnimation, QEasingCurve, Qt
-from PySide6.QtGui import QPixmap, QIcon
 
 class Home(QMainWindow):
     def __init__(self):
@@ -18,6 +15,8 @@ class Home(QMainWindow):
 class Watch(QMainWindow):
     def __init__(self):
         super().__init__()
+        
+        uic.loadUi("ui/watch.ui", self)
 
         self.playBtn = self.findChild(QPushButton, 'playBtn')
         self.exitBtn = self.findChild(QPushButton, 'exitBtn')
@@ -33,6 +32,6 @@ class Watch(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    widget = Home()
+    widget = Watch()
     widget.show()
     sys.exit(app.exec())
