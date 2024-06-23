@@ -10,7 +10,13 @@ import cloudinary.uploader
 class Home(QMainWindow):
     def __init__(self):
         super().__init__()
-        
+        uic.loadUi("ui/home.ui", self)
+        self.homeBtn = self.findChild(QPushButton, 'homeBtn')
+        self.exitBtn = self.findChild(QPushButton, 'exitBtn')
+        self.helpButton = self.findChild(QPushButton, 'helpBtn')
+        self.OptBtn = self.findChild(QPushButton, 'OptBtn')
+        self.userBtn = self.findChild(QPushButton, 'userBtn')
+        self.CRUDButton = self.findChild(QPushButton, 'CRUDButton')
 
 class Watch(QMainWindow):
     def __init__(self):
@@ -28,10 +34,19 @@ class Watch(QMainWindow):
         self.volumeBar = self.findChild(QSlider, 'volumeBar')
         self.videoWidget = self.findChild(QWidget, 'videoWidget')
 
+class movieList(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        
+class CRUD(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    widget = Watch()
+    widget = Home()
     widget.show()
     sys.exit(app.exec())

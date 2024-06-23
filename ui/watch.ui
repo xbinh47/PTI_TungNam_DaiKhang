@@ -310,7 +310,7 @@ border-radius:10px</string>
        </size>
       </property>
      </widget>
-     <widget class="QPushButton" name="pauseBtn">
+     <widget class="QPushButton" name="playBtn">
       <property name="geometry">
        <rect>
         <x>430</x>
@@ -330,7 +330,7 @@ border-radius:10px</string>
         <normaloff>../img/pause-solid.svg</normaloff>../img/pause-solid.svg</iconset>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="fullscreenBtn">
       <property name="geometry">
        <rect>
         <x>10</x>
