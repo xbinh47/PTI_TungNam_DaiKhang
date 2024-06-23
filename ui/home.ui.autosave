@@ -347,7 +347,7 @@ color:rgb(0, 0, 0)</string>
      <string>Welcome to Interten!</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="helpBtn">
     <property name="geometry">
      <rect>
       <x>250</x>
