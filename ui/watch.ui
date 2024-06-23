@@ -248,9 +248,9 @@ border-radius:10px</string>
      <widget class="QSlider" name="durationBar">
       <property name="geometry">
        <rect>
-        <x>90</x>
+        <x>130</x>
         <y>10</y>
-        <width>771</width>
+        <width>731</width>
         <height>22</height>
        </rect>
       </property>
@@ -263,12 +263,12 @@ border-radius:10px</string>
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>81</width>
+        <width>121</width>
         <height>20</height>
        </rect>
       </property>
       <property name="text">
-       <string>00:00:00</string>
+       <string>00:00:00/00:00:00</string>
       </property>
      </widget>
      <widget class="QSlider" name="volumeBar">
@@ -279,6 +279,12 @@ border-radius:10px</string>
         <width>160</width>
         <height>22</height>
        </rect>
+      </property>
+      <property name="maximum">
+       <number>100</number>
+      </property>
+      <property name="value">
+       <number>100</number>
       </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -314,7 +320,7 @@ border-radius:10px</string>
       <property name="geometry">
        <rect>
         <x>430</x>
-        <y>30</y>
+        <y>34</y>
         <width>41</width>
         <height>31</height>
        </rect>
