@@ -285,16 +285,6 @@ background-color:rgb(255, 255, 255)</string>
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="widget_2" native="true">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>40</y>
-      <width>981</width>
-      <height>581</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QPushButton" name="userBtn">
     <property name="geometry">
      <rect>
@@ -347,7 +337,7 @@ color:rgb(0, 0, 0)</string>
      <string>Welcome to Interten!</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="helpBtn">
     <property name="geometry">
      <rect>
       <x>250</x>
@@ -368,9 +358,9 @@ font: 700 10pt &quot;Segoe UI&quot;;</string>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>870</x>
+      <x>880</x>
       <y>0</y>
-      <width>121</width>
+      <width>111</width>
       <height>31</height>
      </rect>
     </property>
@@ -382,6 +372,29 @@ color:rgb(0, 0, 0)</string>
     </property>
     <property name="text">
      <string>Your Account</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>60</y>
+      <width>941</width>
+      <height>551</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:rgb(255, 255, 255);
+border-radius:25px</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../img/labelApp.svg</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>
