@@ -379,7 +379,7 @@ background-color:rgb(255, 255, 255)</string>
               <number>0</number>
              </property>
              <item>
-              <widget class="QLineEdit" name="searchInput">
+              <widget class="QLineEdit" name="searchEdit">
                <property name="minimumSize">
                 <size>
                  <width>400</width>

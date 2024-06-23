@@ -7,6 +7,17 @@ from PyQt6.QtGui import QIcon
 from PyQt6 import uic
 import cloudinary.uploader
 
+class movieList(QMainWindow)
+    def __init__(self):
+        super().__init__()
+        uic.loadUi("ui/movieList.ui", self)
+        self.homeBtn = self.findChild(QPushButton, 'homeBtn')
+        self.exitBtn = self.findChild(QPushButton, 'exitBtn')
+        self.OptBtn = self.findChild(QPushButton, 'OptBtn')
+        self.userBtn = self.findChild(QPushButton, 'userBtn')
+        self.CRUDButton = self.findChild(QPushButton, 'CRUDButton')
+        self.searchEdit = self.findChild(QLineEdit, 'searchEdit')\
+        
 class CRUD(QMainWindow):
     def __init__(self):
         super().__init__()
