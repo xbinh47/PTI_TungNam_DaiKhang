@@ -226,26 +226,6 @@ border-radius:10px</string>
       <enum>QFrame::Raised</enum>
      </property>
     </widget>
-    <widget class="QFrame" name="viewFrame">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>40</y>
-       <width>881</width>
-       <height>501</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color:rgb(255, 255, 255);
-</string>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-    </widget>
     <widget class="QFrame" name="controlFrame">
      <property name="geometry">
       <rect>
@@ -350,26 +330,6 @@ border-radius:10px</string>
         <normaloff>../img/pause-solid.svg</normaloff>../img/pause-solid.svg</iconset>
       </property>
      </widget>
-     <widget class="QPushButton" name="playBtn">
-      <property name="geometry">
-       <rect>
-        <x>430</x>
-        <y>30</y>
-        <width>41</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset>
-        <normaloff>../img/play-solid.svg</normaloff>../img/play-solid.svg</iconset>
-      </property>
-     </widget>
      <widget class="QPushButton" name="pushButton">
       <property name="geometry">
        <rect>
@@ -394,6 +354,19 @@ background-color:rgb(0, 0, 0)</string>
        <string>Fullscreen</string>
       </property>
      </widget>
+    </widget>
+    <widget class="QWidget" name="videoWidget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>40</y>
+       <width>881</width>
+       <height>501</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color:rgb(255, 255, 255)</string>
+     </property>
     </widget>
    </widget>
   </widget>
