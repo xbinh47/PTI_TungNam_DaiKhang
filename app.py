@@ -64,6 +64,8 @@ class Watch(QMainWindow):
         self.volumeBtn.setIcon(self.volumeHighIcon)
 
         # Ensure volume bar range is set from 0 to 100
+        self.current_volume = 50
+        self.volumeBar.setValue(self.current_volume)
         self.volumeBar.setRange(0, 100)
         self.volumeBar.setValue(50)  # Set initial volume to 50%
 
@@ -126,9 +128,12 @@ class Watch(QMainWindow):
         if self.audioOutput.isMuted():
             self.audioOutput.setMuted(False)
             self.volumeBtn.setIcon(self.volumeHighIcon)
+            self.volumeBar.setValue(self.current_volume)
         else:
             self.audioOutput.setMuted(True)
             self.volumeBtn.setIcon(self.muteIcon)
+            self.current_volume = self.volumeBar.value()
+            self.volumeBar.setValue(0)
     
     def toggleFullscreen(self):
         if self.isFullScreen():
@@ -144,6 +149,7 @@ class Watch(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    widget = Home()
+    widget = Watch()
+    widget.initVideoUrl("C:/Users/binhn/Documents/MindX/PTA/HTLO-PTA-03-HB/QT/Test/song.mp4")
     widget.show()
     sys.exit(app.exec())
