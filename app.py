@@ -1,11 +1,26 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QSlider, QWidget, QFileDialog, QPushButton, QToolButton
+from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QSlider, QWidget, QFileDialog, QPushButton, QToolButton,QLineEdit
 from PyQt6.QtMultimedia import QMediaPlayer, QAudioOutput
 from PyQt6.QtMultimediaWidgets import QVideoWidget
 from PyQt6.QtCore import QUrl
 from PyQt6.QtGui import QIcon
 from PyQt6 import uic
 import cloudinary.uploader
+
+class CRUD(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        uic.loadUi("ui/CRUD.ui", self)
+        self.homeBtn = self.findChild(QPushButton, 'homeBtn')
+        self.exitBtn = self.findChild(QPushButton, 'exitBtn')
+        self.OptBtn = self.findChild(QPushButton, 'OptBtn')
+        self.userBtn = self.findChild(QPushButton, 'userBtn')
+        self.CRUDButton = self.findChild(QPushButton, 'CRUDButton')
+        self.addBtn = self.findChild(QPushButton, 'addBtn')
+        self.editBtn = self.findChild(QPushButton, 'editBtn')
+        self.removeBtn = self.findChild(QPushButton, 'removeBtn')
+        self.searchBtn = self.findChild(QPushButton, 'searchBtn')
+        self.searchEdit = self.findChild(QLineEdit, 'searchEdit')
 
 class Home(QMainWindow):
     def __init__(self):
@@ -56,7 +71,7 @@ class Watch(QMainWindow):
         self.volumeOffIcon = QIcon("img/volume-off-solid.svg")
         self.muteIcon = QIcon("img/volume-off-solid.svg")
         self.exitIcon = QIcon("img/right-from-bracket-solid.svg")
-        self.homeIcon = QIcon("img/user-regular.svg")
+        self.homeIcon = QIcon("img/house-solid.svg")
         
         self.playBtn.setIcon(self.playIcon)
         self.exitBtn.setIcon(self.exitIcon)
