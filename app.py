@@ -123,6 +123,8 @@ class Watch(QMainWindow):
         # Convert the slider value to a float between 0.0 and 1.0
         volume = volume / 100.0
         self.audioOutput.setVolume(volume)
+        if volume == 0.0:
+            self.volumeBtn.setIcon(self.volumeOffIcon)
     
     def toggleMute(self):
         if self.audioOutput.isMuted():
