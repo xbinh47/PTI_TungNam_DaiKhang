@@ -1,5 +1,5 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QSlider, QWidget, QFileDialog, QPushButton, QToolButton,QLineEdit
+from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QSlider, QWidget, QPushButton, QToolButton,QLineEdit
 from PyQt6.QtMultimedia import QMediaPlayer, QAudioOutput
 from PyQt6.QtMultimediaWidgets import QVideoWidget
 from PyQt6.QtCore import QUrl
@@ -7,7 +7,7 @@ from PyQt6.QtGui import QIcon
 from PyQt6 import uic
 import cloudinary.uploader
 
-class movieList(QMainWindow)
+class movieList(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi("ui/movieList.ui", self)
@@ -16,8 +16,7 @@ class movieList(QMainWindow)
         self.OptBtn = self.findChild(QPushButton, 'OptBtn')
         self.userBtn = self.findChild(QPushButton, 'userBtn')
         self.CRUDButton = self.findChild(QPushButton, 'CRUDButton')
-        self.searchEdit = self.findChild(QLineEdit, 'searchEdit')\
-        
+        self.searchEdit = self.findChild(QLineEdit, 'searchEdit')
 class CRUD(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -188,6 +187,6 @@ class Watch(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     widget = Watch()
-    widget.initVideoUrl("C:/Users/binhn/Documents/MindX/PTA/HTLO-PTA-03-HB/QT/Test/song.mp4")
+    widget.initVideoUrl("C:/Users/ADMIN/Documents/GitHub/PTI_TungNam_DaiKhang/Movies/Despicable_Me_4_Official_Trailer.mp4")
     widget.show()
     sys.exit(app.exec())
