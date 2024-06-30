@@ -1,4 +1,5 @@
 import sys
+from PyQt6 import QtCore
 from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QSlider, QWidget, QPushButton, QToolButton, QLineEdit
 from PyQt6.QtMultimedia import QMediaPlayer, QAudioOutput
 from PyQt6.QtMultimediaWidgets import QVideoWidget
