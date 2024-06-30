@@ -1,13 +1,15 @@
 import sys
 from PyQt6 import QtCore
-from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QSlider, QWidget, QPushButton, QToolButton, QLineEdit
+from PyQt6.QtWidgets import QApplication, QMainWindow, QFileDialog, QLabel, QSlider, QWidget, QPushButton, QToolButton, QLineEdit
 from PyQt6.QtMultimedia import QMediaPlayer, QAudioOutput
 from PyQt6.QtMultimediaWidgets import QVideoWidget
 from PyQt6.QtCore import QUrl
 from PyQt6.QtGui import QIcon
 from PyQt6 import uic
-import cloudinary
 import cloudinary.uploader
+from cloudinary_config import cloudinary
+import sqlite3
+
 
 class movieList(QMainWindow):
     def __init__(self):
@@ -189,6 +191,6 @@ class Watch(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     widget = Watch()
-    widget.initVideoUrl("C:/Users/ADMIN/Documents/GitHub/PTI_TungNam_DaiKhang/Movies/Despicable_Me_4_Official_Trailer.mp4")
+    widget.initVideoUrl('secure_url')
     widget.show()
     sys.exit(app.exec())
