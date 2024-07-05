@@ -191,6 +191,6 @@ class Watch(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     widget = Watch()
-    widget.initVideoUrl('secure_url')
+    widget.initVideoUrl()
     widget.show()
     sys.exit(app.exec())
