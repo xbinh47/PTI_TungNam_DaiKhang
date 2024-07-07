@@ -1,5 +1,6 @@
 import sys
 from PyQt6 import QtCore
+from PyQt6 import QtWidgets
 from PyQt6.QtWidgets import QApplication, QMainWindow, QFileDialog, QLabel, QSlider, QWidget, QPushButton, QToolButton, QLineEdit
 from PyQt6.QtMultimedia import QMediaPlayer, QAudioOutput
 from PyQt6.QtMultimediaWidgets import QVideoWidget
@@ -104,7 +105,7 @@ class Watch(QMainWindow):
         self.fullscreenBtn.clicked.connect(self.toggleFullscreen)
         self.volumeBtn.clicked.connect(self.toggleMute)
 
-    def initVideoUrl(self, url):
+    def initVideoUrl(self, url): 
         self.videoUrl = url
         self.loadVideo()        
         
@@ -189,8 +190,16 @@ class Watch(QMainWindow):
         return f"{hours:02}:{minutes:02}:{seconds:02}"
 
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
+    sqliteConnection = sqlite3.connect('data/db.db')
+    def query_db(query):
+        cursor = sqliteConnection.cursor()
+        cursor.execute(query)
+        result = cursor.fetchall() #check if the result was in db(in list)
+        cursor.close()
+        return result
+    
+    app = QtWidgets.QApplication(sys.argv)
     widget = Watch()
-    widget.initVideoUrl()
+    widget.initVideoUrl("https://res.cloudinary.com/duwwvifxn/video/upload/v1720250930/Despicable_Me_4_Official_Trailer_gwoeip.mp4")
     widget.show()
     sys.exit(app.exec())
