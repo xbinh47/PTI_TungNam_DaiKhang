@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>845</width>
     <height>600</height>
    </rect>
   </property>
@@ -40,7 +40,7 @@ border-radius: 10px;</string>
     <widget class="QLabel" name="label">
      <property name="geometry">
       <rect>
-       <x>90</x>
+       <x>70</x>
        <y>110</y>
        <width>261</width>
        <height>31</height>
@@ -52,6 +52,9 @@ border-radius: 10px;</string>
        <bold>true</bold>
       </font>
      </property>
+     <property name="styleSheet">
+      <string notr="true">color:rgb(0, 0, 0);s</string>
+     </property>
      <property name="text">
       <string>Welcome back</string>
      </property>
@@ -59,7 +62,7 @@ border-radius: 10px;</string>
     <widget class="QLabel" name="label_2">
      <property name="geometry">
       <rect>
-       <x>50</x>
+       <x>30</x>
        <y>150</y>
        <width>291</width>
        <height>16</height>
@@ -71,11 +74,14 @@ border-radius: 10px;</string>
        <bold>true</bold>
       </font>
      </property>
+     <property name="styleSheet">
+      <string notr="true">color:rgb(0, 0, 0);</string>
+     </property>
      <property name="text">
       <string>            Please enter your details</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit">
+    <widget class="QLineEdit" name="txtEmail">
      <property name="geometry">
       <rect>
        <x>60</x>
@@ -100,7 +106,7 @@ padding-left: 10px</string>
       <string>Email</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_2">
+    <widget class="QLineEdit" name="txtPass">
      <property name="geometry">
       <rect>
        <x>60</x>
@@ -125,11 +131,11 @@ padding-left: 10px</string>
       <string>Password</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="btn_login">
      <property name="geometry">
       <rect>
        <x>60</x>
-       <y>320</y>
+       <y>280</y>
        <width>261</width>
        <height>41</height>
       </rect>
@@ -149,30 +155,11 @@ color: rgb(255, 255, 255);</string>
       <string>Sign in</string>
      </property>
     </widget>
-    <widget class="QCheckBox" name="checkBox">
-     <property name="geometry">
-      <rect>
-       <x>60</x>
-       <y>290</y>
-       <width>251</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>11</pointsize>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Remember me</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_2">
+    <widget class="QPushButton" name="btn_register">
      <property name="geometry">
       <rect>
        <x>70</x>
-       <y>370</y>
+       <y>340</y>
        <width>251</width>
        <height>24</height>
       </rect>
@@ -183,17 +170,19 @@ color: rgb(255, 255, 255);</string>
        <bold>true</bold>
       </font>
      </property>
+     <property name="styleSheet">
+      <string notr="true">color:rgb(0, 0, 0)</string>
+     </property>
      <property name="text">
       <string>Don't have account?Sign up</string>
      </property>
     </widget>
     <zorder>label_2</zorder>
-    <zorder>lineEdit</zorder>
+    <zorder>txtEmail</zorder>
     <zorder>label</zorder>
-    <zorder>lineEdit_2</zorder>
-    <zorder>pushButton</zorder>
-    <zorder>checkBox</zorder>
-    <zorder>pushButton_2</zorder>
+    <zorder>txtPass</zorder>
+    <zorder>btn_login</zorder>
+    <zorder>btn_register</zorder>
    </widget>
   </widget>
  </widget>

@@ -53,7 +53,7 @@ class Register(QtWidgets.QMainWindow):
         
         query = f"INSERT INTO USER (username, password, email) VALUES ('{self.name}', '{password}', '{email}')"
         print(query)
-        insert_db(query)
+        execute_db(query)
 
         success_box.setText("Register Successfully!")
         loginPage.show()
@@ -102,7 +102,35 @@ class Login(QtWidgets.QMainWindow):
         registerPage.show()
         self.close()
 
-    def showMainPage(self):
-        mainPage.setUsername(self.name)
-        mainPage.show()
-        self.close()
+
+if __name__ == '__main__':
+    sqliteConnection = sqlite3.connect('data/user.db')
+    def execute_db(query): #insert, execute data in table
+        cusor = sqliteConnection.cursor()
+        cusor.execute(query)
+        sqliteConnection.commit()
+        cusor.close()
+
+    def query_db(query):
+        cursor = sqliteConnection.cursor()
+        cursor.execute(query)
+        result = cursor.fetchall() #check if the result was in db(in list)
+        cursor.close()
+        return result
+    app = QtWidgets.QApplication(sys.argv)
+
+    loginPage = Login() #set page
+    loginPage.show()
+    registerPage = Register()
+
+
+    err_box = QMessageBox()
+    err_box.setWindowTitle("Error.")
+    err_box.setIcon(QMessageBox.Icon.Warning)
+    # err_box.setStyleSheet()
+    
+    success_box = QMessageBox()
+    success_box.setWindowTitle("Success!")
+    success_box.setIcon(QMessageBox.Icon.Information)
+    # success_box.setStyleSheet()
+    app.exec()
