@@ -379,7 +379,7 @@ background-color:rgb(255, 255, 255)</string>
               <number>0</number>
              </property>
              <item>
-              <widget class="QLineEdit" name="searchEdit">
+              <widget class="QLineEdit" name="searchInput">
                <property name="minimumSize">
                 <size>
                  <width>400</width>
@@ -460,33 +460,23 @@ border-radius:10px</string>
       </widget>
      </item>
      <item>
-      <widget class="QListWidget" name="movieList"/>
-     </item>
-     <item>
-      <widget class="QFrame" name="listFrame">
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
+      <widget class="QScrollArea" name="movieList">
+       <property name="sizeAdjustPolicy">
+        <enum>QAbstractScrollArea::AdjustIgnored</enum>
        </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
+       <property name="widgetResizable">
+        <bool>true</bool>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_4">
-        <property name="spacing">
-         <number>0</number>
+       <widget class="QWidget" name="scrollAreaWidgetContents">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>924</width>
+          <height>583</height>
+         </rect>
         </property>
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-       </layout>
+       </widget>
       </widget>
      </item>
     </layout>

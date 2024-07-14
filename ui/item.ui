@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>339</width>
-    <height>547</height>
+    <width>300</width>
+    <height>650</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,8 +18,8 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>311</width>
-     <height>391</height>
+     <width>300</width>
+     <height>480</height>
     </rect>
    </property>
    <property name="text">
@@ -30,7 +30,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>410</y>
+     <y>470</y>
      <width>321</width>
      <height>51</height>
     </rect>
@@ -41,15 +41,19 @@
      <bold>true</bold>
     </font>
    </property>
+   <property name="styleSheet">
+    <string notr="true">color:rgb(255, 255, 255);
+</string>
+   </property>
    <property name="text">
     <string>Title</string>
    </property>
   </widget>
-  <widget class="QLabel" name="movieInfo">
+  <widget class="QLabel" name="movieDate">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>470</y>
+     <y>520</y>
      <width>151</width>
      <height>31</height>
     </rect>
@@ -59,6 +63,10 @@
      <pointsize>10</pointsize>
     </font>
    </property>
+   <property name="styleSheet">
+    <string notr="true">color:rgb(255, 255, 255);
+</string>
+   </property>
    <property name="text">
     <string>Release date</string>
    </property>
@@ -67,7 +75,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>510</y>
+     <y>560</y>
      <width>321</width>
      <height>31</height>
     </rect>
@@ -77,8 +85,25 @@
      <pointsize>10</pointsize>
     </font>
    </property>
+   <property name="styleSheet">
+    <string notr="true">color:rgb(255, 255, 255);
+</string>
+   </property>
    <property name="text">
     <string>Genre</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="watchBtn">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>600</y>
+     <width>201</width>
+     <height>29</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Watch now</string>
    </property>
   </widget>
  </widget>

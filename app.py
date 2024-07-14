@@ -1,18 +1,56 @@
 import sys
 from PyQt6 import QtCore
 from PyQt6 import QtWidgets
-from PyQt6.QtWidgets import QApplication, QMainWindow, QFileDialog, QLabel, QSlider, QWidget, QPushButton, QToolButton, QLineEdit
+from PyQt6.QtWidgets import QApplication, QMainWindow, QFileDialog, QLabel, QSlider, QWidget, QPushButton, QToolButton, QLineEdit, QScrollArea, QGridLayout, QSizePolicy
 from PyQt6.QtMultimedia import QMediaPlayer, QAudioOutput
 from PyQt6.QtMultimediaWidgets import QVideoWidget
 from PyQt6.QtCore import QUrl
-from PyQt6.QtGui import QIcon
+from PyQt6.QtGui import QIcon, QPixmap, QImage
 from PyQt6 import uic
 import cloudinary.uploader
 from cloudinary_config import cloudinary
-import sqlite3
+import database
+import requests
 
 
-class movieList(QMainWindow):
+class MovieItemWidget(QWidget):
+    def __init__(self, id, name, release_date, genre, img):
+        super().__init__()
+        uic.loadUi("ui/item.ui", self)
+        self.id = id
+        self.name = name
+        self.release_date = release_date
+        self.genre = genre
+        self.img = img
+
+        self.movieGenre = self.findChild(QLabel, 'movieGenre')
+        self.movieDate = self.findChild(QLabel, 'movieDate')
+        self.movieTitle = self.findChild(QLabel, 'movieTitle')
+        self.movieView = self.findChild(QLabel, 'movieView')
+        self.watchBtn = self.findChild(QPushButton, 'watchBtn')
+
+        self.watchBtn.clicked.connect(self.navigateToWatch)
+        self.init()
+
+    def init(self):
+        image = QImage()
+        image.loadFromData(requests.get(self.img).content)
+        self.movieView.setPixmap(QPixmap(image))
+        self.movieView.setScaledContents(True)
+        self.movieTitle.setText(self.name)
+        self.movieDate.setText(f"Release date: {self.release_date}")
+        self.movieGenre.setText(f"Genre: {self.genre}")
+
+        self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        self.setMinimumHeight(650)
+        self.setMinimumWidth(300)
+
+    def navigateToWatch(self):
+        watchScreen = Watch(self.id)
+        watchScreen.show()
+
+
+class MovieList(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi("ui/movieList.ui", self)
@@ -22,6 +60,39 @@ class movieList(QMainWindow):
         self.userBtn = self.findChild(QPushButton, 'userBtn')
         self.CRUDButton = self.findChild(QPushButton, 'CRUDButton')
         self.searchEdit = self.findChild(QLineEdit, 'searchEdit')
+        self.movieList = self.findChild(QScrollArea, 'movieList')
+
+        self.movieItem = QWidget()
+        self.gridLayout = QGridLayout(self.movieItem)
+        self.gridLayout.setContentsMargins(10, 10, 10, 10)
+        self.gridLayout.setSpacing(10)
+
+        self.movieItem.setLayout(self.gridLayout)
+
+        self.movieList.setWidget(self.movieItem)
+        self.movieList.setWidgetResizable(True)
+
+        self.renderMovie()
+
+    def renderMovie(self):
+        # Clear previous search results
+        for i in reversed(range(self.gridLayout.count())): 
+            widgetToRemove = self.gridLayout.itemAt(i).widget()
+            self.gridLayout.removeWidget(widgetToRemove)
+            widgetToRemove.setParent(None)
+        
+        movieList = database.query_db("SELECT * FROM movie")
+        row = 0
+        column = 0
+        for movie in movieList:
+            itemWidget = MovieItemWidget(movie[0], movie[1], movie[3], movie[4], movie[5])
+            self.gridLayout.addWidget(itemWidget, row, column)
+            column += 1
+            if column == 3:
+                row += 1
+                column = 0
+
+
 class CRUD(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -49,10 +120,12 @@ class Home(QMainWindow):
         self.CRUDButton = self.findChild(QPushButton, 'CRUDButton')
 
 class Watch(QMainWindow):
-    def __init__(self):
+    def __init__(self, movie_id):
         super().__init__()
         
         uic.loadUi("ui/watch.ui", self)
+
+        self.movie_id = movie_id
 
         self.videoUrl = ""
         self.playBtn = self.findChild(QPushButton, 'playBtn')
@@ -76,7 +149,9 @@ class Watch(QMainWindow):
         self.audioOutput = QAudioOutput(self)
         self.mediaPlayer.setAudioOutput(self.audioOutput)
 
+        movie = database.getVideoByID(self.movie_id)
         self.init_ui()
+        self.initVideoUrl(movie[2])
 
     def init_ui(self):
         self.playIcon = QIcon("img/play-solid.svg")
@@ -105,21 +180,25 @@ class Watch(QMainWindow):
         self.fullscreenBtn.clicked.connect(self.toggleFullscreen)
         self.volumeBtn.clicked.connect(self.toggleMute)
 
-    def initVideoUrl(self, url): 
+    def initVideoUrl(self, url):
         self.videoUrl = url
         self.loadVideo()        
-        
+
     def loadVideo(self):
-        self.mediaPlayer.setSource(QUrl.fromLocalFile(self.videoUrl))
-        self.mediaPlayer.pause()
-        
-        self.durationBar.sliderMoved.connect(self.setPosition)
-        self.volumeBar.sliderMoved.connect(self.setVolume)
-        self.mediaPlayer.playbackStateChanged.connect(self.mediaStateChanged)
-        self.mediaPlayer.positionChanged.connect(self.positionChanged)
-        self.mediaPlayer.durationChanged.connect(self.durationChanged)
-        self.mediaPlayer.errorOccurred.connect(self.handleError)
-    
+        try:
+            print(self.videoUrl)
+            self.mediaPlayer.setSource(QUrl.fromLocalFile(self.videoUrl))
+            self.mediaPlayer.pause()
+            
+            self.durationBar.sliderMoved.connect(self.setPosition)
+            self.volumeBar.sliderMoved.connect(self.setVolume)
+            self.mediaPlayer.playbackStateChanged.connect(self.mediaStateChanged)
+            self.mediaPlayer.positionChanged.connect(self.positionChanged)
+            self.mediaPlayer.durationChanged.connect(self.durationChanged)
+            self.mediaPlayer.errorOccurred.connect(self.handleError)
+        except Exception as e:
+            print(f"Error loading video: {e}")
+
     def mediaStateChanged(self, state):
         if self.mediaPlayer.playbackState() == QMediaPlayer.PlaybackState.PlayingState:
             self.playBtn.setIcon(self.pauseIcon)
@@ -138,7 +217,9 @@ class Watch(QMainWindow):
     
     def handleError(self):
         self.playBtn.setEnabled(False)
-        self.playBtn.setText("Error: " + self.mediaPlayer.errorString())
+        error_message = self.mediaPlayer.errorString()
+        self.playBtn.setText(f"Error: {error_message}")
+        print(f"Media Player Error: {error_message}")
         
     def play(self):
         if self.mediaPlayer.playbackState() == QMediaPlayer.PlaybackState.PlayingState:
@@ -170,7 +251,6 @@ class Watch(QMainWindow):
             else:
                 self.volumeBtn.setIcon(self.volumeOffIcon)
             self.volumeBar.setValue(self.current_volume)
-            
         else:
             self.audioOutput.setMuted(True)
             self.volumeBtn.setIcon(self.muteIcon)
@@ -190,16 +270,9 @@ class Watch(QMainWindow):
         return f"{hours:02}:{minutes:02}:{seconds:02}"
 
 if __name__ == "__main__":
-    sqliteConnection = sqlite3.connect('data/db.db')
-    def query_db(query):
-        cursor = sqliteConnection.cursor()
-        cursor.execute(query)
-        result = cursor.fetchall() #check if the result was in db(in list)
-        cursor.close()
-        return result
-    
     app = QtWidgets.QApplication(sys.argv)
-    widget = Watch()
-    widget.initVideoUrl("https://res.cloudinary.com/duwwvifxn/video/upload/v1720250930/Despicable_Me_4_Official_Trailer_gwoeip.mp4")
+    widget = Watch(2)
     widget.show()
+    mainScreen = MovieList()
+    mainScreen.show()
     sys.exit(app.exec())
