@@ -21,9 +21,9 @@ background-color: rgb(0, 0, 0)</string>
    <widget class="QWidget" name="widget" native="true">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>40</x>
       <y>50</y>
-      <width>381</width>
+      <width>371</width>
       <height>500</height>
      </rect>
     </property>
@@ -35,13 +35,13 @@ background-color: rgb(0, 0, 0)</string>
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: rgb(255, 255, 255);
-border-radius: 10px;</string>
+border-radius: 30px;</string>
     </property>
     <widget class="QLabel" name="label">
      <property name="geometry">
       <rect>
-       <x>120</x>
-       <y>40</y>
+       <x>110</x>
+       <y>90</y>
        <width>171</width>
        <height>31</height>
       </rect>
@@ -62,8 +62,8 @@ border-radius: 10px;</string>
     <widget class="QLabel" name="label_2">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>80</y>
+       <x>10</x>
+       <y>140</y>
        <width>291</width>
        <height>16</height>
       </rect>
@@ -84,8 +84,8 @@ border-radius: 10px;</string>
     <widget class="QLineEdit" name="txtEmail">
      <property name="geometry">
       <rect>
-       <x>60</x>
-       <y>110</y>
+       <x>50</x>
+       <y>170</y>
        <width>261</width>
        <height>41</height>
       </rect>
@@ -109,8 +109,8 @@ padding-left: 10px</string>
     <widget class="QLineEdit" name="txtPass">
      <property name="geometry">
       <rect>
-       <x>60</x>
-       <y>200</y>
+       <x>50</x>
+       <y>270</y>
        <width>261</width>
        <height>41</height>
       </rect>
@@ -134,8 +134,8 @@ padding-left: 10px</string>
     <widget class="QPushButton" name="btnSignUp">
      <property name="geometry">
       <rect>
-       <x>60</x>
-       <y>300</y>
+       <x>50</x>
+       <y>370</y>
        <width>261</width>
        <height>41</height>
       </rect>
@@ -159,9 +159,9 @@ color: rgb(255, 255, 255);</string>
      <property name="geometry">
       <rect>
        <x>50</x>
-       <y>350</y>
+       <y>410</y>
        <width>271</width>
-       <height>24</height>
+       <height>31</height>
       </rect>
      </property>
      <property name="font">
@@ -180,8 +180,8 @@ color: rgb(255, 255, 255);</string>
     <widget class="QLineEdit" name="txtConfirmPass">
      <property name="geometry">
       <rect>
-       <x>60</x>
-       <y>245</y>
+       <x>50</x>
+       <y>320</y>
        <width>261</width>
        <height>41</height>
       </rect>
@@ -205,8 +205,8 @@ padding-left: 10px</string>
     <widget class="QLineEdit" name="txtname">
      <property name="geometry">
       <rect>
-       <x>60</x>
-       <y>155</y>
+       <x>50</x>
+       <y>220</y>
        <width>261</width>
        <height>41</height>
       </rect>
@@ -227,6 +227,178 @@ padding-left: 10px</string>
       <string>Username</string>
      </property>
     </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>280</x>
+       <y>450</y>
+       <width>131</width>
+       <height>181</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius: 10px;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../img/leaves diagonal1.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>280</x>
+       <y>-20</y>
+       <width>121</width>
+       <height>91</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius: 10px;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../img/leaves-horizontal.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_14">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>20</y>
+       <width>141</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../img/leavecenter.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_6">
+     <property name="geometry">
+      <rect>
+       <x>-30</x>
+       <y>410</y>
+       <width>131</width>
+       <height>181</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius: 10px;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../img/leaves diagonal1.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_7">
+     <property name="geometry">
+      <rect>
+       <x>-10</x>
+       <y>-20</y>
+       <width>131</width>
+       <height>111</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius: 10px;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../img/leaves diagonal2.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_8">
+     <property name="geometry">
+      <rect>
+       <x>280</x>
+       <y>100</y>
+       <width>131</width>
+       <height>181</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius: 10px;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../img/leaves diagonal1.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_15">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>280</y>
+       <width>151</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../img/leavecenter.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_16">
+     <property name="geometry">
+      <rect>
+       <x>-80</x>
+       <y>220</y>
+       <width>151</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../img/leavecenter.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <zorder>label_16</zorder>
+    <zorder>label_15</zorder>
+    <zorder>label_8</zorder>
+    <zorder>label_6</zorder>
+    <zorder>label_14</zorder>
     <zorder>label_2</zorder>
     <zorder>txtEmail</zorder>
     <zorder>label</zorder>
@@ -235,6 +407,9 @@ padding-left: 10px</string>
     <zorder>btnLogin</zorder>
     <zorder>txtConfirmPass</zorder>
     <zorder>txtname</zorder>
+    <zorder>label_3</zorder>
+    <zorder>label_4</zorder>
+    <zorder>label_7</zorder>
    </widget>
   </widget>
  </widget>
