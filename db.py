@@ -33,8 +33,8 @@ def get_user_by_email_password(email, password):
     result = query_db(query)
     return result
 
-def update_user(id, email, username, phone, address, nationality):
-    query = f"UPDATE USER SET email = '{email}', username = '{username}', phone = '{phone}', address = '{address}', nationality = '{nationality}' WHERE id = {id}"
+def update_user(id, email, username, phone, address, nationality, avatar):
+    query = f"UPDATE USER SET email = '{email}', username = '{username}', phone = '{phone}', address = '{address}', nationality = '{nationality}', avatar = '{avatar}' WHERE id = {id}"
     execute_db(query)
 
     
