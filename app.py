@@ -1,7 +1,8 @@
 import sys
 from PyQt6 import QtCore
 from PyQt6 import QtWidgets
-from PyQt6.QtWidgets import QApplication, QMainWindow, QFileDialog, QLabel, QSlider, QWidget, QPushButton, QToolButton, QLineEdit, QScrollArea, QGridLayout, QSizePolicy
+from PyQt6.QtWidgets import QApplication, QMainWindow, QFileDialog, QDialog
+from PyQt6.QtWidgets import  QLabel, QSlider, QWidget, QPushButton, QToolButton, QLineEdit, QScrollArea, QGridLayout, QSizePolicy, QDateEdit, QDialogButtonBox, QMessageBox
 from PyQt6.QtMultimedia import QMediaPlayer, QAudioOutput
 from PyQt6.QtMultimediaWidgets import QVideoWidget
 from PyQt6.QtCore import QUrl
@@ -10,9 +11,10 @@ from PyQt6 import uic
 import cloudinary.uploader
 from cloudinary_config import cloudinary
 import database
+from database import execute_db
 import requests
 
-
+#The Widgets:
 class MovieItemWidget(QWidget):
     def __init__(self, id, name, release_date, genre, img):
         super().__init__()
@@ -49,18 +51,159 @@ class MovieItemWidget(QWidget):
         watchScreen = Watch(self.id)
         watchScreen.show()
 
+class CRUDItemWidget(QWidget):
+    def __init__(self, id, name, release_date, genre, img):
+        super().__init__()
+        uic.loadUi("ui/item.ui", self)
+        self.id = id
+        self.name = name
+        self.release_date = release_date
+        self.genre = genre
+        self.img = img
+
+        self.movieGenre = self.findChild(QLabel, 'movieGenre')
+        self.movieDate = self.findChild(QLabel, 'movieDate')
+        self.movieTitle = self.findChild(QLabel, 'movieTitle')
+        self.movieView = self.findChild(QLabel, 'movieView')
+        self.editBtn = self.findChild(QPushButton, 'watchBtn')
+        self.removeBtn = self.findChild(QPushButton, 'removeBtn')
+
+        self.editBtn.clicked.connect(self.editMovie)
+        self.removeBtn.clicked.connect(self.removeMovie)
+        self.init()
+
+    def init(self):
+        image = QImage()
+        image.loadFromData(requests.get(self.img).content)
+        self.movieView.setPixmap(QPixmap(image))
+        self.movieView.setScaledContents(True)
+        self.movieTitle.setText(self.name)
+        self.movieDate.setText(f"Release date: {self.release_date}")
+        self.movieGenre.setText(f"Genre: {self.genre}")
+
+    def editMovie(self):
+        dialog = EditMovieDialog(self.id)
+        if dialog.exec() == QDialog.DialogCode.Accepted:
+            self.init()
+
+    def removeMovie(self):
+        query = f"DELETE FROM movie WHERE id = {self.id} "
+        execute_db(query)
+        self.setParent(None)
+
+#The Dialogs:
+class AddMovieDialog(QDialog):
+    def __init__(self):
+        super().__init__()
+        uic.loadUi("ui/add_dialog.ui", self)
+        
+        self.titleEdit = self.findChild(QLineEdit, 'titleEdit')
+        self.releaseDateEdit = self.findChild(QDateEdit, 'releaseDateEdit')
+        self.genreEdit = self.findChild(QLineEdit, 'genreEdit')
+        self.imageBtn = self.findChild(QPushButton, 'imageBtn')
+        self.urlEdit = self.findChild(QLineEdit, 'urlEdit')
+        self.buttonBox = self.findChild(QDialogButtonBox, 'buttonBox')
+        
+        self.imageBtn.clicked.connect(self.uploadImage)
+        self.buttonBox.accepted.connect(self.accept)
+        # self.buttonBox.rejected.connect(self.reject)
+        
+        self.uploadedImageUrl = ""
+
+    def uploadImage(self):
+        fileName, _ = QFileDialog.getOpenFileName(self, "Select Image", "", "Image Files (*.png *.jpg *.bmp)")
+        if fileName:
+            response = cloudinary.uploader.upload(fileName)
+            self.uploadedImageUrl = response['url']
+            self.urlEdit.setText(self.uploadedImageUrl)
+
+    def accept(self):
+        name = self.titleEdit.text()
+        release_date = self.releaseDateEdit.date().toString('yyyy-MM-dd')
+        genre = self.genreEdit.text()
+        img = self.uploadedImageUrl
+        
+        if name and release_date and genre and img:
+            # Add to the database
+            query = f"INSERT INTO movie (name, release_date, genre, img) VALUES ('{name}', '{release_date}', '{genre}', '{img}')"
+            execute_db(query)
+            success_box.setText("Movie edited.")
+            success_box.exec()
+        else:
+            # Show an error message
+            err_box.setText("Please fill all fields and upload the thumbnail image!")
+            err_box.exec()
+
+class EditMovieDialog(QDialog):
+    def __init__(self, movie_id):
+        super().__init__()
+        uic.loadUi("ui/edit_dialog.ui", self)
+        
+        self.movie_id = movie_id
+        self.titleEdit = self.findChild(QLineEdit, 'titleEdit')
+        self.releaseDateEdit = self.findChild(QDateEdit, 'releaseDateEdit')
+        self.genreEdit = self.findChild(QLineEdit, 'genreEdit')
+        self.imageBtn = self.findChild(QPushButton, 'imageBtn')
+        self.urlEdit = self.findChild(QLineEdit, 'urlEdit')
+        self.buttonBox = self.findChild(QDialogButtonBox, 'buttonBox')
+        
+        self.imageBtn.clicked.connect(self.uploadImage)
+        self.buttonBox.accepted.connect(self.accept)
+        self.buttonBox.rejected.connect(self.reject)
+        
+        self.uploadedImageUrl = ""
+        self.loadMovieData()
+
+    def loadMovieData(self):
+        movie = database.getMovieByID(self.movie_id)
+        if movie:
+            self.titleEdit.setText(movie[1])
+            self.releaseDateEdit.setDate(QtCore.QDate.fromString(movie[2], 'yyyy-MM-dd'))
+            self.genreEdit.setText(movie[3])
+            self.urlEdit.setText(movie[4])
+            self.uploadedImageUrl = movie[4]
+
+    def uploadImage(self):
+        fileName, _ = QFileDialog.getOpenFileName(self, "Select Image", "", "Image Files (*.png *.jpg *.bmp)")
+        if fileName:
+            response = cloudinary.uploader.upload(fileName)
+            self.uploadedImageUrl = response['url']
+            self.urlEdit.setText(self.uploadedImageUrl)
+
+    def accept(self):
+        name = self.titleEdit.text()
+        release_date = self.releaseDateEdit.date().toString('yyyy-MM-dd')
+        genre = self.genreEdit.text()
+        img = self.uploadedImageUrl
+
+        if name and release_date and genre and img:
+            # Add to the database
+            query = f"INSERT INTO movie (name, release_date, genre, img) VALUES ('{name}', '{release_date}', '{genre}', '{img}')"
+            execute_db(query)
+            success_box.setText("Movie edited.")
+            success_box.exec()
+        else:
+            # Show an error message
+            err_box.setText("Please fill all fields and upload the thumbnail image!")
+            err_box.exec()
+
+
 
 class MovieList(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi("ui/movieList.ui", self)
         self.homeBtn = self.findChild(QPushButton, 'homeBtn')
-        self.exitBtn = self.findChild(QPushButton, 'exitBtn')
-        self.OptBtn = self.findChild(QPushButton, 'OptBtn')
+        self.listBtn = self.findChild(QPushButton, 'listBtn')
         self.userBtn = self.findChild(QPushButton, 'userBtn')
         self.CRUDButton = self.findChild(QPushButton, 'CRUDButton')
         self.searchEdit = self.findChild(QLineEdit, 'searchEdit')
         self.movieList = self.findChild(QScrollArea, 'movieList')
+
+        self.CRUDButton.clicked.connect(self.CRUDShow)
+        # self.homeBtn.clicked.connect(self.HomeShow)
+        # self.userBtn.clicked.connect(self.UserShow)
+
 
         self.movieItem = QWidget()
         self.gridLayout = QGridLayout(self.movieItem)
@@ -92,6 +235,16 @@ class MovieList(QMainWindow):
                 row += 1
                 column = 0
 
+    def CRUDShow(self):
+        CRUDPage.show()
+        self.close()
+    # def HomeShow(self):
+    #     HomePage.show()
+    #     self.close()
+    # def UserShow(self):
+    #     UserPage.show()
+        # self.close()
+
 
 class CRUD(QMainWindow):
     def __init__(self):
@@ -99,14 +252,70 @@ class CRUD(QMainWindow):
         uic.loadUi("ui/CRUD.ui", self)
         self.homeBtn = self.findChild(QPushButton, 'homeBtn')
         self.exitBtn = self.findChild(QPushButton, 'exitBtn')
-        self.OptBtn = self.findChild(QPushButton, 'OptBtn')
+        self.listBtn = self.findChild(QPushButton, 'ListBtn')
         self.userBtn = self.findChild(QPushButton, 'userBtn')
         self.CRUDButton = self.findChild(QPushButton, 'CRUDButton')
         self.addBtn = self.findChild(QPushButton, 'addBtn')
-        self.editBtn = self.findChild(QPushButton, 'editBtn')
-        self.removeBtn = self.findChild(QPushButton, 'removeBtn')
         self.searchBtn = self.findChild(QPushButton, 'searchBtn')
         self.searchEdit = self.findChild(QLineEdit, 'searchEdit')
+        self.movieList = self.findChild(QScrollArea, 'movieList')
+
+        self.addBtn.clicked.connect(self.addMovie)
+        self.searchBtn.clicked.connect(self.searchMovie)
+        # self.homeBtn.clicked.connect(self.HomeShow)
+        self.listBtn.clicked.connect(self, ListPage.show())
+        # self.userBtn.clicked.connect(self.UserShow)
+
+        self.movieItem = QWidget()
+        self.gridLayout = QGridLayout(self.movieItem)
+        self.gridLayout.setContentsMargins(10, 10, 10, 10)
+        self.gridLayout.setSpacing(10)
+        self.movieItem.setLayout(self.gridLayout)
+
+        self.movieList.setWidget(self.movieItem)
+        self.movieList.setWidgetResizable(True)
+
+        self.renderMovie()
+
+    def addMovie(self):
+        dialog = AddMovieDialog()
+        if dialog.exec() == QDialog.DialogCode.Accepted:
+            self.renderMovie()
+
+    def searchMovie(self):
+        search_term = self.searchEdit.text()
+        movieList = database.search_movies(search_term)
+        self.displayMovies(movieList)
+
+    def renderMovie(self):
+        movieList = database.query_db("SELECT * FROM movie")
+        self.displayMovies(movieList)
+
+    def displayMovies(self, movieList):
+        for i in reversed(range(self.gridLayout.count())):
+            widgetToRemove = self.gridLayout.itemAt(i).widget()
+            self.gridLayout.removeWidget(widgetToRemove)
+            widgetToRemove.setParent(None)
+
+        row = 0
+        column = 0
+        for movie in movieList:
+            itemWidget = MovieItemWidget(movie[0], movie[1], movie[3], movie[4], movie[5])
+            self.gridLayout.addWidget(itemWidget, row, column)
+            column += 1
+            if column == 3:
+                row += 1
+                column = 0
+
+    def ListShow(self):
+        ListPage.show()
+        self.close()
+    # def HomeShow(self):
+    #     HomePage.show()
+    #     self.close()
+    # def UserShow(self):
+    #     UserPage.show()
+    #     self.close()
 
 class Home(QMainWindow):
     def __init__(self):
@@ -149,7 +358,7 @@ class Watch(QMainWindow):
         self.audioOutput = QAudioOutput(self)
         self.mediaPlayer.setAudioOutput(self.audioOutput)
 
-        movie = database.getVideoByID(self.movie_id)
+        movie = database.getMovieByID(self.movie_id)
         self.init_ui()
         self.initVideoUrl(movie[2])
 
@@ -273,6 +482,18 @@ if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     widget = Watch(2)
     widget.show()
-    mainScreen = MovieList()
-    mainScreen.show()
+    ListPage = MovieList()
+    ListPage.show()
+    CRUDPage = CRUD()
+    # HomePage = Home()
+
+    err_box = QMessageBox()
+    err_box.setWindowTitle("Error.")
+    err_box.setIcon(QMessageBox.Icon.Warning)
+    
+    success_box = QMessageBox()
+    success_box.setWindowTitle("Success!")
+    success_box.setIcon(QMessageBox.Icon.Information)
+
     sys.exit(app.exec())
+

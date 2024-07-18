@@ -109,7 +109,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="OptBtn">
+         <widget class="QPushButton" name="listBtn">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -244,44 +244,6 @@ background-color:rgb(255, 255, 255)</string>
         </size>
        </property>
       </spacer>
-     </item>
-     <item>
-      <widget class="QToolButton" name="exitButton">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>50</height>
-        </size>
-       </property>
-       <property name="cursor">
-        <cursorShape>PointingHandCursor</cursorShape>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color:rgb(255, 255, 255)</string>
-       </property>
-       <property name="text">
-        <string>       EXIT</string>
-       </property>
-       <property name="icon">
-        <iconset>
-         <normaloff>../img/right-from-bracket-solid.svg</normaloff>../img/right-from-bracket-solid.svg</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>25</width>
-         <height>25</height>
-        </size>
-       </property>
-       <property name="toolButtonStyle">
-        <enum>Qt::ToolButtonTextBesideIcon</enum>
-       </property>
-      </widget>
      </item>
     </layout>
    </widget>
@@ -461,9 +423,6 @@ border-radius:10px</string>
      </item>
      <item>
       <widget class="QScrollArea" name="movieList">
-       <property name="sizeAdjustPolicy">
-        <enum>QAbstractScrollArea::AdjustIgnored</enum>
-       </property>
        <property name="widgetResizable">
         <bool>true</bool>
        </property>
