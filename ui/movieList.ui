@@ -109,7 +109,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="OptBtn">
+         <widget class="QPushButton" name="listBtn">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
             <horstretch>0</horstretch>

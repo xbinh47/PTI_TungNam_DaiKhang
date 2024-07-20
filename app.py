@@ -187,8 +187,6 @@ class EditMovieDialog(QDialog):
             err_box.setText("Please fill all fields and upload the thumbnail image!")
             err_box.exec()
 
-
-
 class MovieList(QMainWindow):
     def __init__(self):
         super().__init__()
