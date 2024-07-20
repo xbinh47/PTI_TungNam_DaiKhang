@@ -16,8 +16,11 @@ import requests
 
 #The Widgets:
 class MovieItemWidget(QWidget):
-    def __init__(self, id, name, release_date, genre, img):
-        super().__init__()
+    # Define a signal to handle navigation
+    navigate_to_watch = QtCore.pyqtSignal(int)
+
+    def __init__(self, id, name, release_date, genre, img, parent=None):
+        super().__init__(parent)
         uic.loadUi("ui/item.ui", self)
         self.id = id
         self.name = name
@@ -31,7 +34,7 @@ class MovieItemWidget(QWidget):
         self.movieView = self.findChild(QLabel, 'movieView')
         self.watchBtn = self.findChild(QPushButton, 'watchBtn')
 
-        self.watchBtn.clicked.connect(self.navigateToWatch)
+        self.watchBtn.clicked.connect(self.emitNavigateSignal)
         self.init()
 
     def init(self):
@@ -47,9 +50,8 @@ class MovieItemWidget(QWidget):
         self.setMinimumHeight(650)
         self.setMinimumWidth(300)
 
-    def navigateToWatch(self):
-        watchScreen = Watch(self.id)
-        watchScreen.show()
+    def emitNavigateSignal(self):
+        self.navigate_to_watch.emit(self.id)
 
 class CRUDItemWidget(QWidget):
     def __init__(self, id, name, release_date, genre, img):
@@ -200,10 +202,7 @@ class MovieList(QMainWindow):
         self.searchEdit = self.findChild(QLineEdit, 'searchEdit')
         self.movieList = self.findChild(QScrollArea, 'movieList')
 
-        self.CRUDButton.clicked.connect(self.CRUDShow)
-        # self.homeBtn.clicked.connect(self.HomeShow)
-        # self.userBtn.clicked.connect(self.UserShow)
-
+        # self.CRUDButton.clicked.connect(self.CRUDShow)
 
         self.movieItem = QWidget()
         self.gridLayout = QGridLayout(self.movieItem)
@@ -219,21 +218,27 @@ class MovieList(QMainWindow):
 
     def renderMovie(self):
         # Clear previous search results
-        for i in reversed(range(self.gridLayout.count())): 
+        for i in reversed(range(self.gridLayout.count())):
             widgetToRemove = self.gridLayout.itemAt(i).widget()
             self.gridLayout.removeWidget(widgetToRemove)
             widgetToRemove.setParent(None)
-        
+
         movieList = database.query_db("SELECT * FROM movie")
         row = 0
         column = 0
         for movie in movieList:
-            itemWidget = MovieItemWidget(movie[0], movie[1], movie[3], movie[4], movie[5])
+            itemWidget = MovieItemWidget(movie[0], movie[1], movie[3], movie[4], movie[5], self)
+            itemWidget.navigate_to_watch.connect(self.navigateToWatch)
             self.gridLayout.addWidget(itemWidget, row, column)
             column += 1
             if column == 3:
                 row += 1
                 column = 0
+
+    @QtCore.pyqtSlot(int)
+    def navigateToWatch(self, movie_id):
+        self.watchScreen = Watch(movie_id)
+        self.watchScreen.show()
 
     def CRUDShow(self):
         CRUDPage.show()
@@ -243,8 +248,7 @@ class MovieList(QMainWindow):
     #     self.close()
     # def UserShow(self):
     #     UserPage.show()
-        # self.close()
-
+    #     self.close()
 
 class CRUD(QMainWindow):
     def __init__(self):
@@ -480,12 +484,10 @@ class Watch(QMainWindow):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    widget = Watch(2)
-    widget.show()
     ListPage = MovieList()
     ListPage.show()
     CRUDPage = CRUD()
-    # HomePage = Home()
+    HomePage = Home()
 
     err_box = QMessageBox()
     err_box.setWindowTitle("Error.")
