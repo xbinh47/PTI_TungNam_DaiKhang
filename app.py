@@ -56,7 +56,7 @@ class MovieItemWidget(QWidget):
 class CRUDItemWidget(QWidget):
     def __init__(self, id, name, release_date, genre, img):
         super().__init__()
-        uic.loadUi("ui/item.ui", self)
+        uic.loadUi("ui/crudItem.ui", self)
         self.id = id
         self.name = name
         self.release_date = release_date
@@ -82,6 +82,9 @@ class CRUDItemWidget(QWidget):
         self.movieTitle.setText(self.name)
         self.movieDate.setText(f"Release date: {self.release_date}")
         self.movieGenre.setText(f"Genre: {self.genre}")
+        self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        self.setMinimumHeight(650)
+        self.setMinimumWidth(300)
 
     def editMovie(self):
         dialog = EditMovieDialog(self.id)
@@ -196,11 +199,11 @@ class MovieList(QMainWindow):
         self.homeBtn = self.findChild(QPushButton, 'homeBtn')
         self.listBtn = self.findChild(QPushButton, 'listBtn')
         self.userBtn = self.findChild(QPushButton, 'userBtn')
-        self.CRUDButton = self.findChild(QPushButton, 'CRUDButton')
+        self.CRUDButton = self.findChild(QToolButton, 'CRUDButton')
         self.searchEdit = self.findChild(QLineEdit, 'searchEdit')
         self.movieList = self.findChild(QScrollArea, 'movieList')
 
-        # self.CRUDButton.clicked.connect(self.CRUDShow)
+        self.CRUDButton.clicked.connect(self.CRUDShow)
 
         self.movieItem = QWidget()
         self.gridLayout = QGridLayout(self.movieItem)
