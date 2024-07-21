@@ -1,6 +1,7 @@
 
 from PyQt6 import QtWidgets 
 from PyQt6.QtWidgets import QMessageBox
+from PyQt6.QtGui import QIcon
 from PyQt6 import uic
 import sys
 import sqlite3
@@ -102,6 +103,43 @@ class Login(QtWidgets.QMainWindow):
         registerPage.show()
         self.close()
 
+class UserInfo(QtWidgets.QMainWindow):
+    def __init__(self, id):
+        super().__init__()
+        uic.loadUi("ui/user_info.ui", self)
+        self.id = id
+        self.saveBtn.clicked.connect(self.updateInfo)
+        self.loadData()
+        self.avatar = ""
+        self.avatarBtn.clicked.connect(self.loadAvatarImage)
+    
+    def loadData(self):
+        result = get_user_by_id(self.id)
+        self.txtName.setText(result[1])
+        self.txtEmail.setText(result[2])
+        self.txtPass.setText(result[3])
+        self.txtPhone.setText(result[4])
+        self.txtAddress.setText(result[5])
+        self.txtCountry.setText(result[6])
+        if result[7]:
+            self.avatar = result[7]
+            self.avatarLabel.setPixmap(QtWidgets.QPixmap(result[7]))
+        
+    def loadAvatarImage(self):
+        file, _ = QtWidgets.QFileDialog.getOpenFileName(self, "Select Image", "", "Image Files (*.png *.jpg *jpeg *.bmp)")
+        if file:
+            self.avatar = file
+            self.avatarBtn.setIcon(QIcon(file))
+        
+    def updateInfo(self):
+        email = self.txtEmail.text()
+        username = self.txtName.text()
+        phone = self.txtPhone.text()
+        address = self.txtAddress.text()
+        nationality = self.txtCountry.text()
+        avatar = self.avatar
+        update_user(self.id, email, username, phone, address, nationality, avatar)
+        self.loadData()
 
 if __name__ == '__main__':
     sqliteConnection = sqlite3.connect('data/user.db')
@@ -117,12 +155,21 @@ if __name__ == '__main__':
         result = cursor.fetchall() #check if the result was in db(in list)
         cursor.close()
         return result
+    
+    def get_user_by_id(id):
+        query = f"SELECT * FROM USER WHERE id = {id}"
+        result = query_db(query)
+        return result[0]
+
+    def update_user(id, email, username, phone, address, nationality, avatar):
+        query = f"UPDATE USER SET email = '{email}', username = '{username}', phone = '{phone}', address = '{address}', nationality = '{nationality}', avatar = '{avatar}' WHERE id = {id}"
+        execute_db(query)
+    
     app = QtWidgets.QApplication(sys.argv)
 
     loginPage = Login() #set page
     loginPage.show()
     registerPage = Register()
-
 
     err_box = QMessageBox()
     err_box.setWindowTitle("Error.")
