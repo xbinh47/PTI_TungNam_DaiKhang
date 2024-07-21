@@ -14,7 +14,7 @@ import database
 from database import execute_db
 import requests
 
-#The Widgets:
+# The Widgets:
 class MovieItemWidget(QWidget):
     # Define a signal to handle navigation
     navigate_to_watch = QtCore.pyqtSignal(int)
@@ -96,7 +96,7 @@ class CRUDItemWidget(QWidget):
         execute_db(query)
         self.setParent(None)
 
-#The Dialogs:
+# The Dialogs:
 class AddMovieDialog(QDialog):
     def __init__(self):
         super().__init__()
@@ -222,14 +222,15 @@ class MovieList(QMainWindow):
         movieList = database.search_movies(search_term)
         self.renderMovie(movieList)
 
-    def renderMovie(self):
+    def renderMovie(self, movieList=None):
         # Clear previous search results
         for i in reversed(range(self.gridLayout.count())):
             widgetToRemove = self.gridLayout.itemAt(i).widget()
             self.gridLayout.removeWidget(widgetToRemove)
             widgetToRemove.setParent(None)
 
-        movieList = database.query_db("SELECT * FROM movie")
+        if movieList is None:
+            movieList = database.query_db("SELECT * FROM movie")
         row = 0
         column = 0
         for movie in movieList:
@@ -243,7 +244,7 @@ class MovieList(QMainWindow):
 
     @QtCore.pyqtSlot(int)
     def navigateToWatch(self, movie_id):
-        self.watchScreen = Watch(movie_id)
+        self.watchScreen = Watch(movie_id, self)
         self.watchScreen.show()
         self.close()
 
@@ -340,12 +341,13 @@ class Home(QMainWindow):
         self.CRUDButton = self.findChild(QPushButton, 'CRUDButton')
 
 class Watch(QMainWindow):
-    def __init__(self, movie_id):
+    def __init__(self, movie_id, list_page):
         super().__init__()
         
         uic.loadUi("ui/watch.ui", self)
 
         self.movie_id = movie_id
+        self.list_page = list_page
 
         self.videoUrl = ""
         self.playBtn = self.findChild(QPushButton, 'playBtn')
@@ -492,9 +494,8 @@ class Watch(QMainWindow):
         minutes, seconds = divmod(remainder, 60)
         return f"{hours:02}:{minutes:02}:{seconds:02}"
 
-    def showListPage (self):
-        listPage = MovieList()
-        listPage.show()
+    def showListPage(self):
+        self.list_page.show()
         self.close()
 
     def closeEvent(self, event):
@@ -517,4 +518,3 @@ if __name__ == "__main__":
     success_box.setIcon(QMessageBox.Icon.Information)
 
     sys.exit(app.exec())
-
