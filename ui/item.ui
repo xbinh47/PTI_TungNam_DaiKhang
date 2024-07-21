@@ -96,10 +96,10 @@
   <widget class="QPushButton" name="watchBtn">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>588</y>
-     <width>211</width>
-     <height>51</height>
+     <x>10</x>
+     <y>598</y>
+     <width>281</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="styleSheet">

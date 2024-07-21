@@ -245,6 +245,7 @@ class MovieList(QMainWindow):
     def navigateToWatch(self, movie_id):
         self.watchScreen = Watch(movie_id)
         self.watchScreen.show()
+        self.close()
 
     def CRUDShow(self):
         CRUDPage.show()
@@ -351,10 +352,13 @@ class Watch(QMainWindow):
         self.exitBtn = self.findChild(QToolButton, 'exitBtn')
         self.fullscreenBtn = self.findChild(QPushButton, 'fullscreenBtn')
         self.homeBtn = self.findChild(QPushButton, 'homeBtn')
+        self.listBtn = self.findChild(QPushButton, 'listBtn')
         self.volumeBtn = self.findChild(QPushButton, 'volumeBtn')
         self.timeLabel = self.findChild(QLabel, 'timeLabel')
         self.durationBar = self.findChild(QSlider, 'durationBar')
         self.volumeBar = self.findChild(QSlider, 'volumeBar')
+
+        self.listBtn.clicked.connect(self.showListPage)
 
         # Create a QVideoWidget object
         placeholder = self.findChild(QWidget, 'videoWidget')
@@ -487,6 +491,15 @@ class Watch(QMainWindow):
         hours, remainder = divmod(total_seconds, 3600)
         minutes, seconds = divmod(remainder, 60)
         return f"{hours:02}:{minutes:02}:{seconds:02}"
+
+    def showListPage (self):
+        listPage = MovieList()
+        listPage.show()
+        self.close()
+
+    def closeEvent(self, event):
+        self.mediaPlayer.stop()
+        event.accept()
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
