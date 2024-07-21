@@ -70,6 +70,11 @@
      <height>29</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">font: 700 11pt &quot;Segoe UI&quot;;
+border-radius:10px;
+background-color:rgb(255, 255, 255)</string>
+   </property>
    <property name="text">
     <string>Edit</string>
    </property>
@@ -120,6 +125,11 @@
      <width>121</width>
      <height>29</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 700 11pt &quot;Segoe UI&quot;;
+border-radius:10px;
+background-color:rgb(255, 255, 255)</string>
    </property>
    <property name="text">
     <string>Remove</string>

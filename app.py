@@ -67,7 +67,7 @@ class CRUDItemWidget(QWidget):
         self.movieDate = self.findChild(QLabel, 'movieDate')
         self.movieTitle = self.findChild(QLabel, 'movieTitle')
         self.movieView = self.findChild(QLabel, 'movieView')
-        self.editBtn = self.findChild(QPushButton, 'watchBtn')
+        self.editBtn = self.findChild(QPushButton, 'editBtn')
         self.removeBtn = self.findChild(QPushButton, 'removeBtn')
 
         self.editBtn.clicked.connect(self.editMovie)
@@ -214,6 +214,11 @@ class MovieList(QMainWindow):
 
         self.renderMovie()
 
+    def searchMovie(self):
+        search_term = self.searchEdit.text()
+        movieList = database.search_movies(search_term)
+        self.renderMovie(movieList)
+
     def renderMovie(self):
         # Clear previous search results
         for i in reversed(range(self.gridLayout.count())):
@@ -254,18 +259,18 @@ class CRUD(QMainWindow):
         uic.loadUi("ui/CRUD.ui", self)
         self.homeBtn = self.findChild(QPushButton, 'homeBtn')
         self.exitBtn = self.findChild(QPushButton, 'exitBtn')
-        self.listBtn = self.findChild(QPushButton, 'ListBtn')
+        self.listBtn = self.findChild(QPushButton, 'listBtn')
         self.userBtn = self.findChild(QPushButton, 'userBtn')
         self.CRUDButton = self.findChild(QPushButton, 'CRUDButton')
         self.addBtn = self.findChild(QPushButton, 'addBtn')
         self.searchBtn = self.findChild(QPushButton, 'searchBtn')
         self.searchEdit = self.findChild(QLineEdit, 'searchEdit')
-        self.movieList = self.findChild(QScrollArea, 'movieList')
+        self.CRUDList = self.findChild(QScrollArea, 'CRUDList')
 
         self.addBtn.clicked.connect(self.addMovie)
         self.searchBtn.clicked.connect(self.searchMovie)
         # self.homeBtn.clicked.connect(self.HomeShow)
-        self.listBtn.clicked.connect(self, ListPage.show())
+        # self.listBtn.clicked.connect(self, ListShow)
         # self.userBtn.clicked.connect(self.UserShow)
 
         self.movieItem = QWidget()
@@ -274,8 +279,8 @@ class CRUD(QMainWindow):
         self.gridLayout.setSpacing(10)
         self.movieItem.setLayout(self.gridLayout)
 
-        self.movieList.setWidget(self.movieItem)
-        self.movieList.setWidgetResizable(True)
+        self.CRUDList.setWidget(self.movieItem)
+        self.CRUDList.setWidgetResizable(True)
 
         self.renderMovie()
 
@@ -302,7 +307,7 @@ class CRUD(QMainWindow):
         row = 0
         column = 0
         for movie in movieList:
-            itemWidget = MovieItemWidget(movie[0], movie[1], movie[3], movie[4], movie[5])
+            itemWidget = CRUDItemWidget(movie[0], movie[1], movie[3], movie[4], movie[5])
             self.gridLayout.addWidget(itemWidget, row, column)
             column += 1
             if column == 3:
@@ -485,7 +490,7 @@ if __name__ == "__main__":
     ListPage = MovieList()
     ListPage.show()
     CRUDPage = CRUD()
-    HomePage = Home()
+    # HomePage = Home()
 
     err_box = QMessageBox()
     err_box.setWindowTitle("Error.")

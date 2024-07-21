@@ -97,10 +97,15 @@
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>600</y>
-     <width>201</width>
-     <height>29</height>
+     <y>588</y>
+     <width>211</width>
+     <height>51</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-radius:10px;
+background-color:rgb(255, 255, 255);
+font: 700 12pt &quot;Segoe UI&quot;;</string>
    </property>
    <property name="text">
     <string>Watch now</string>
