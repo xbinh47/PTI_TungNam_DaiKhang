@@ -67,7 +67,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="titleInput">
+          <widget class="QLineEdit" name="titleEdit">
            <property name="maximumSize">
             <size>
              <width>200</width>
@@ -225,7 +225,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="urlInput">
+          <widget class="QLineEdit" name="urlEdit">
            <property name="maximumSize">
             <size>
              <width>200</width>
