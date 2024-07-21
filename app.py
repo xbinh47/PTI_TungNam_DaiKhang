@@ -105,7 +105,7 @@ class AddMovieDialog(QDialog):
         self.titleEdit = self.findChild(QLineEdit, 'titleEdit')
         self.releaseDateEdit = self.findChild(QDateEdit, 'releaseDateEdit')
         self.genreEdit = self.findChild(QLineEdit, 'genreEdit')
-        self.imageBtn = self.findChild(QPushButton, 'imageBtn')
+        self.imageBtn = self.findChild(QToolButton, 'imageBtn')
         self.urlEdit = self.findChild(QLineEdit, 'urlEdit')
         self.buttonBox = self.findChild(QDialogButtonBox, 'buttonBox')
         
@@ -148,7 +148,7 @@ class EditMovieDialog(QDialog):
         self.titleEdit = self.findChild(QLineEdit, 'titleEdit')
         self.releaseDateEdit = self.findChild(QDateEdit, 'releaseDateEdit')
         self.genreEdit = self.findChild(QLineEdit, 'genreEdit')
-        self.imageBtn = self.findChild(QPushButton, 'imageBtn')
+        self.imageBtn = self.findChild(QToolButton, 'imageBtn')
         self.urlEdit = self.findChild(QLineEdit, 'urlEdit')
         self.buttonBox = self.findChild(QDialogButtonBox, 'buttonBox')
         
