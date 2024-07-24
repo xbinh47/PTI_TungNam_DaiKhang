@@ -15,6 +15,149 @@ from database import execute_db
 import requests
 
 # The Widgets:
+class Register(QtWidgets.QMainWindow):
+    def __init__ (self):
+        super().__init__()
+        uic.loadUi("ui/sign_up.ui", self)
+        self.name = ""
+        self.btnSignUp.clicked.connect(self.register)
+        self.btnLogin.clicked.connect(self.showLoginPage)
+
+    def register(self):
+        self.name = self.txtname.text()
+        email = self.txtEmail.text()
+        password = self.txtPass.text()
+        confirm_pass = self.txtConfirmPass.text()
+
+        if not self.name:
+            err_box.setText("Please enter your name!")
+            err_box.exec()
+            return 
+
+        if not email:
+            err_box.setText("Please enter your email!")
+            err_box.exec() 
+            return 
+
+        if not password:
+            err_box.setText("Please enter your password!")
+            err_box.exec()
+            return 
+        
+        if not confirm_pass:
+            err_box.setText("Please enter your confirmed password!")
+            err_box.exec() 
+            return 
+
+        if password != confirm_pass:
+            err_box.setText("Password and Confirm Password not match!")
+            err_box.exec()
+            return 
+        
+        query = f"SELECT * FROM USER WHERE email = ('{email}')"
+        result = database.query_db(query)
+
+        if len(result) > 0:
+            err_box.setText("This email had been used for an another account!")
+            err_box.exec()
+            return
+        
+        query = f"INSERT INTO USER (username, password, email) VALUES ('{self.name}', '{password}', '{email}')"
+        print(query)
+        execute_db(query)
+
+        success_box.setText("Register Successfully!")
+        
+        self.close()
+
+    def showLoginPage(self):
+        self.login = Login()
+        self.login.show()
+        self.close()
+
+class Login(QtWidgets.QMainWindow):
+    def __init__(self):
+        super().__init__() #call out the characters of ParentClass
+        uic.loadUi("ui/sign_in.ui", self) #Create and load the file ui
+        self.name = ""
+        self.btn_login.clicked.connect(self.checkLogin)
+        self.btn_register.clicked.connect(self.showRegisterPage)
+    
+    def checkLogin(self):
+        email = self.txtEmail.text()
+        password = self.txtPass.text()
+
+        if not email:
+            err_box.setText("Please enter your email!")
+            err_box.exec()
+            return
+
+        if not password:
+            err_box.setText("Please enter your password!")
+            err_box.exec()
+            return
+
+        query = f"SELECT * FROM USER WHERE email ='{email}' and password='{password}'" #query select
+        result = database.query_db(query)
+        self.name = result[0][1]
+
+        if len(result) == 0:
+            err_box.setText("Invalid Username or Password!")
+            err_box.exec()
+            return
+        
+        success_box.setText("Succesfully Login!")
+        success_box.exec()
+        self.showMainPage()
+
+    def showRegisterPage(self):
+        self.register = Register()
+        self.register.show()
+        self.close()
+        
+    def showMainPage(self):
+        self.main = MovieList(id)
+        self.main.show()
+        self.close()
+
+class UserInfo(QtWidgets.QMainWindow):
+    def __init__(self, id):
+        super().__init__()
+        uic.loadUi("ui/user_info.ui", self)
+        self.id = id
+        self.saveBtn.clicked.connect(self.updateInfo)
+        self.loadData()
+        self.avatar = ""
+        self.avatarBtn.clicked.connect(self.loadAvatarImage)
+    
+    def loadData(self):
+        result = database.get_user_by_id(self.id)
+        self.txtName.setText(result[1])
+        self.txtEmail.setText(result[2])
+        self.txtPass.setText(result[3])
+        self.txtPhone.setText(result[4])
+        self.txtAddress.setText(result[5])
+        self.txtCountry.setText(result[6])
+        if result[7]:
+            self.avatar = result[7]
+            self.avatarLabel.setPixmap(QtWidgets.QPixmap(result[7]))
+        
+    def loadAvatarImage(self):
+        file, _ = QtWidgets.QFileDialog.getOpenFileName(self, "Select Image", "", "Image Files (*.png *.jpg *jpeg *.bmp)")
+        if file:
+            self.avatar = file
+            self.avatarBtn.setIcon(QIcon(file))
+        
+    def updateInfo(self):
+        email = self.txtEmail.text()
+        username = self.txtName.text()
+        phone = self.txtPhone.text()
+        address = self.txtAddress.text()
+        nationality = self.txtCountry.text()
+        avatar = self.avatar
+        database.update_user(self.id, email, username, phone, address, nationality, avatar)
+        self.loadData()
+
 class MovieItemWidget(QWidget):
     # Define a signal to handle navigation
     navigate_to_watch = QtCore.pyqtSignal(int)
@@ -193,9 +336,13 @@ class EditMovieDialog(QDialog):
             err_box.exec()
 
 class MovieList(QMainWindow):
-    def __init__(self):
+    def __init__(self, id):
         super().__init__()
         uic.loadUi("ui/movieList.ui", self)
+        
+        self.id = id
+        user = database.get_user_by_id(self.id)
+        
         self.homeBtn = self.findChild(QPushButton, 'homeBtn')
         self.listBtn = self.findChild(QPushButton, 'listBtn')
         self.userBtn = self.findChild(QPushButton, 'userBtn')
@@ -504,10 +651,9 @@ class Watch(QMainWindow):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    ListPage = MovieList()
-    ListPage.show()
-    CRUDPage = CRUD()
-    # HomePage = Home()
+    
+    login = Login()
+    login.show()
 
     err_box = QMessageBox()
     err_box.setWindowTitle("Error.")

@@ -35,3 +35,12 @@ def remove_movie(id):
 def search_movies(search_term):
     query = f"SELECT * FROM movie WHERE title LIKE {search_term} OR genre LIKE {search_term}"
     return query_db(query)
+
+def get_user_by_id(id):
+    query = f"SELECT * FROM USER WHERE id = {id}"
+    result = query_db(query)
+    return result[0]
+
+def update_user(id, email, username, phone, address, nationality, avatar):
+    query = f"UPDATE USER SET email = '{email}', username = '{username}', phone = '{phone}', address = '{address}', nationality = '{nationality}', avatar = '{avatar}' WHERE id = {id}"
+    execute_db(query)
