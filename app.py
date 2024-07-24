@@ -237,6 +237,8 @@ class CRUDItemWidget(QWidget):
         query = f"DELETE FROM movie WHERE id = {self.id} "
         database.execute_db(query)
         self.setParent(None)
+        CRUDPage.refreshMovieList()
+
 
 # The Dialogs:
 class AddMovieDialog(QDialog):
@@ -306,7 +308,6 @@ class EditMovieDialog(QDialog):
         if movie:
             self.titleEdit.setText(movie[1])
             self.releaseDateEdit.setDate(QtCore.QDate.fromString(movie[2], 'yyyy-MM-dd'))
-            self.genreEdit.setText(movie[3])
             self.urlEdit.setText(movie[4])
             self.uploadedImageUrl = movie[4]
 
@@ -320,10 +321,9 @@ class EditMovieDialog(QDialog):
     def accept(self):
         name = self.titleEdit.text()
         release_date = self.releaseDateEdit.date().toString('yyyy-MM-dd')
-        genre = self.genreEdit.text()
         img = self.uploadedImageUrl
 
-        if name and release_date and genre and img:
+        if name and release_date and img:
             # Add to the database
             query = f"INSERT INTO movie (name, release_date, genre, img) VALUES ('{name}', '{release_date}', '{genre}', '{img}')"
             database.execute_db(query)
@@ -445,6 +445,11 @@ class CRUD(QMainWindow):
         movieList = database.search_movies(search_term)
         self.displayMovies(movieList)
 
+    def refreshMovieList(self):
+        self.renderMovie()
+        success_box.setText("Movie deleted successfully.")
+        success_box.exec()
+
     def renderMovie(self):
         movieList = database.query_db("SELECT * FROM movie")
         self.displayMovies(movieList)
@@ -465,9 +470,9 @@ class CRUD(QMainWindow):
                 row += 1
                 column = 0
 
-    def ListShow(self):
-        ListPage.show()
-        self.close()
+    # def ListShow(self):
+    #     ListPage.show()
+    #     self.close()
     # def HomeShow(self):
     #     HomePage.show()
     #     self.close()
