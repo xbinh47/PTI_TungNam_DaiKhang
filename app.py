@@ -166,7 +166,6 @@ class EditMovieDialog(QDialog):
         if movie:
             self.titleEdit.setText(movie[1])
             self.releaseDateEdit.setDate(QtCore.QDate.fromString(movie[2], 'yyyy-MM-dd'))
-            self.genreEdit.setText(movie[3])
             self.urlEdit.setText(movie[4])
             self.uploadedImageUrl = movie[4]
 
@@ -180,12 +179,11 @@ class EditMovieDialog(QDialog):
     def accept(self):
         name = self.titleEdit.text()
         release_date = self.releaseDateEdit.date().toString('yyyy-MM-dd')
-        genre = self.genreEdit.text()
         img = self.uploadedImageUrl
 
-        if name and release_date and genre and img:
+        if name and release_date and img:
             # Add to the database
-            query = f"INSERT INTO movie (name, release_date, genre, img) VALUES ('{name}', '{release_date}', '{genre}', '{img}')"
+            query = f"INSERT INTO movie (name, release_date, img) VALUES ('{name}', '{release_date}',  '{img}')"
             execute_db(query)
             success_box.setText("Movie edited.")
             success_box.exec()
