@@ -95,6 +95,8 @@ class CRUDItemWidget(QWidget):
         query = f"DELETE FROM movie WHERE id = {self.id} "
         execute_db(query)
         self.setParent(None)
+        CRUDPage.refreshMovieList()
+
 
 # The Dialogs:
 class AddMovieDialog(QDialog):
@@ -299,6 +301,11 @@ class CRUD(QMainWindow):
         movieList = database.search_movies(search_term)
         self.displayMovies(movieList)
 
+    def refreshMovieList(self):
+        self.renderMovie()
+        success_box.setText("Movie deleted successfully.")
+        success_box.exec()
+
     def renderMovie(self):
         movieList = database.query_db("SELECT * FROM movie")
         self.displayMovies(movieList)
@@ -319,9 +326,9 @@ class CRUD(QMainWindow):
                 row += 1
                 column = 0
 
-    def ListShow(self):
-        ListPage.show()
-        self.close()
+    # def ListShow(self):
+    #     ListPage.show()
+    #     self.close()
     # def HomeShow(self):
     #     HomePage.show()
     #     self.close()
