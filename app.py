@@ -11,7 +11,6 @@ from PyQt6 import uic
 import cloudinary.uploader
 from cloudinary_config import cloudinary
 import database
-from database import execute_db
 import requests
 
 # The Widgets:
@@ -64,7 +63,7 @@ class Register(QtWidgets.QMainWindow):
         
         query = f"INSERT INTO USER (username, password, email) VALUES ('{self.name}', '{password}', '{email}')"
         print(query)
-        execute_db(query)
+        database.execute_db(query)
 
         success_box.setText("Register Successfully!")
         
@@ -236,7 +235,7 @@ class CRUDItemWidget(QWidget):
 
     def removeMovie(self):
         query = f"DELETE FROM movie WHERE id = {self.id} "
-        execute_db(query)
+        database.execute_db(query)
         self.setParent(None)
 
 # The Dialogs:
@@ -274,7 +273,7 @@ class AddMovieDialog(QDialog):
         if name and release_date and genre and img:
             # Add to the database
             query = f"INSERT INTO movie (name, release_date, genre, img) VALUES ('{name}', '{release_date}', '{genre}', '{img}')"
-            execute_db(query)
+            database.execute_db(query)
             success_box.setText("Movie edited.")
             success_box.exec()
         else:
@@ -327,7 +326,7 @@ class EditMovieDialog(QDialog):
         if name and release_date and genre and img:
             # Add to the database
             query = f"INSERT INTO movie (name, release_date, genre, img) VALUES ('{name}', '{release_date}', '{genre}', '{img}')"
-            execute_db(query)
+            database.execute_db(query)
             success_box.setText("Movie edited.")
             success_box.exec()
         else:
@@ -654,6 +653,8 @@ if __name__ == "__main__":
     
     login = Login()
     login.show()
+    ListPage = MovieList()
+    CRUDPage = CRUD()
 
     err_box = QMessageBox()
     err_box.setWindowTitle("Error.")
