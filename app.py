@@ -19,6 +19,14 @@ class Register(QtWidgets.QMainWindow):
         super().__init__()
         uic.loadUi("ui/sign_up.ui", self)
         self.name = ""
+
+        self.btnSignUp = self.findChild(QPushButton, "btnSignUp")
+        self.btnLogin = self.findChild(QPushButton, "btnLogin")
+        self.txtname = self.findChild(QLineEdit, "txtname")
+        self.txtEmail = self.findChild(QLineEdit, "txtEmail")
+        self.txtPass = self.findChild(QLineEdit, "txtPass")
+        self.txtConfirmPass = self.findChild(QLineEdit, "txtConfirmPass")
+        
         self.btnSignUp.clicked.connect(self.register)
         self.btnLogin.clicked.connect(self.showLoginPage)
 
@@ -79,9 +87,15 @@ class Login(QtWidgets.QMainWindow):
         super().__init__() #call out the characters of ParentClass
         uic.loadUi("ui/sign_in.ui", self) #Create and load the file ui
         self.name = ""
+
+        self.btn_login = self.findChild(QPushButton, "btn_login")
+        self.btn_register = self.findChild(QPushButton, "btn_register")
+        self.txtEmail = self.findChild(QLineEdit, "txtEmail")
+        self.txtPass = self.findChild(QLineEdit, "txtPass")
+
         self.btn_login.clicked.connect(self.checkLogin)
         self.btn_register.clicked.connect(self.showRegisterPage)
-    
+
     def checkLogin(self):
         email = self.txtEmail.text()
         password = self.txtPass.text()
@@ -124,6 +138,14 @@ class UserInfo(QtWidgets.QMainWindow):
         super().__init__()
         uic.loadUi("ui/user_info.ui", self)
         self.id = id
+        self.saveBtn = self.findChild(QPushButton, 'saveBtn')
+        self.avatarBtn = self.findChild(QPushButton, 'avatarBtn')
+        self.txtEmail = self.findChild(QLineEdit, 'txtEmail')
+        self.txtName = self.findChild(QLineEdit, 'txtName')
+        self.txtPhone = self.findChild(QLineEdit, 'txtPhone')
+        self.txtAddress = self.findChild(QLineEdit, 'txtAddress')
+        self.txtCountry = self.findChild(QLineEdit, 'txtCountry')
+        self.txtPass = self.findChild(QLineEdit,)
         self.saveBtn.clicked.connect(self.updateInfo)
         self.loadData()
         self.avatar = ""
@@ -325,7 +347,7 @@ class EditMovieDialog(QDialog):
 
         if name and release_date and img:
             # Add to the database
-            query = f"INSERT INTO movie (name, release_date, genre, img) VALUES ('{name}', '{release_date}', '{genre}', '{img}')"
+            query = f"INSERT INTO movie (name, release_date, img) VALUES ('{name}', '{release_date}', '{img}')"
             database.execute_db(query)
             success_box.setText("Movie edited.")
             success_box.exec()
