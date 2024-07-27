@@ -80,6 +80,20 @@
        </widget>
       </item>
       <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QLabel" name="genreLabel">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="genreEdit"/>
+        </item>
+       </layout>
+      </item>
+      <item>
        <widget class="QFrame" name="releasedateFrame">
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
@@ -159,6 +173,13 @@
           </widget>
          </item>
          <item>
+          <widget class="QLabel" name="imageText">
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QToolButton" name="imageBtn">
            <property name="minimumSize">
             <size>
@@ -207,7 +228,7 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QLabel" name="urlLabel">
+          <widget class="QLabel" name="videoLabel">
            <property name="minimumSize">
             <size>
              <width>100</width>
@@ -220,17 +241,21 @@
             </font>
            </property>
            <property name="text">
-            <string>New URL</string>
+            <string>New Video</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="urlEdit">
-           <property name="maximumSize">
-            <size>
-             <width>200</width>
-             <height>16777215</height>
-            </size>
+          <widget class="QLabel" name="videoText">
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="videoBtn">
+           <property name="text">
+            <string>...</string>
            </property>
           </widget>
          </item>
