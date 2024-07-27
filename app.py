@@ -456,11 +456,12 @@ class MovieList(QMainWindow):
         self.CRUDButton = self.findChild(QToolButton, 'CRUDButton')
         self.searchEdit = self.findChild(QLineEdit, 'searchEdit')
         self.movieList = self.findChild(QScrollArea, 'movieList')
+        self.searchBtn = self.findChild(QPushButton, "searchBtn")
 
         self.CRUDButton.clicked.connect(self.CRUDShow)
         self.userBtn.clicked.connect(self.UserShow)
         self.homeBtn.clicked.connect(self.HomeShow)
-        self.searchEdit.textChanged.connect(self.searchMovie)
+        self.searchBtn.clicked.connect(self.searchMovie)
 
         self.movieItem = QWidget()
         self.gridLayout = QGridLayout(self.movieItem)
@@ -473,24 +474,21 @@ class MovieList(QMainWindow):
         self.movieList.setWidgetResizable(True)
 
         self.renderMovie()
-
     def searchMovie(self):
-        search_term = self.searchEdit.text()
-        if search_term:
-            movieList = database.search_movies(search_term)
-        else:
-            movieList = database.query_db("SELECT * FROM movie")
-        self.renderMovie(movieList)
+        name = self.searchEdit.text()
+        self.renderMovie(name)
 
-    def renderMovie(self, movieList=None):
+    def renderMovie(self, name=None):
         # Clear previous search results
         for i in reversed(range(self.gridLayout.count())):
             widgetToRemove = self.gridLayout.itemAt(i).widget()
             self.gridLayout.removeWidget(widgetToRemove)
             widgetToRemove.setParent(None)
 
-        if movieList is None:
+        if name is None or name == "":
             movieList = database.query_db("SELECT * FROM movie")
+        else:
+            movieList = database.search_movies(name)
         row = 0
         column = 0
         for movie in movieList:
@@ -560,33 +558,30 @@ class CRUD(QMainWindow):
         if dialog.exec() == QDialog.DialogCode.Accepted:
             self.renderMovie()
 
-    def searchMovie(self):
-        search_term = self.searchEdit.text()
-        if search_term:
-            movieList = database.search_movies(search_term)
-        else:
-            movieList = database.query_db("SELECT * FROM movie")
-        self.renderMovie(movieList)
-
     def refreshMovieList(self):
         self.renderMovie()
         success_box.setText("Movie deleted successfully.")
         success_box.exec()
 
-    def renderMovie(self):
-        movieList = database.query_db("SELECT * FROM movie")
-        self.displayMovies(movieList)
+    def searchMovie(self):
+        name = self.searchEdit.text()
+        self.renderMovie(name)
 
-    def displayMovies(self, movieList):
+    def renderMovie(self, name=None):
+        # Clear previous search results
         for i in reversed(range(self.gridLayout.count())):
             widgetToRemove = self.gridLayout.itemAt(i).widget()
             self.gridLayout.removeWidget(widgetToRemove)
             widgetToRemove.setParent(None)
 
+        if name is None or name == "":
+            movieList = database.query_db("SELECT * FROM movie")
+        else:
+            movieList = database.search_movies(name)
         row = 0
         column = 0
         for movie in movieList:
-            itemWidget = CRUDItemWidget(movie[0], movie[1], movie[3], movie[4], movie[5])
+            itemWidget = CRUDItemWidget(movie[0], movie[1], movie[3], movie[4], movie[5], self)
             self.gridLayout.addWidget(itemWidget, row, column)
             column += 1
             if column == 3:

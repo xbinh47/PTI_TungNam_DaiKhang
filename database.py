@@ -19,11 +19,6 @@ def getMovieByID(id):
     query = f"SELECT * FROM movie WHERE id = {id}"
     return query_db(query)[0]
 
-# def search_movies(search_term):
-#     search_term = f"%{search_term}%"
-#     query = "SELECT * FROM movie WHERE name LIKE ? OR genre LIKE ?"
-#     return query_db(query, (search_term, search_term))
-
 def add_movie(name, release_date, genre, img):
     query = f"INSERT INTO movie (name, release_date, genre, img) VALUES ('{name}', '{release_date}', '{genre}', '{img}')"
     execute_db(query)
@@ -37,7 +32,7 @@ def remove_movie(id):
     execute_db(query)
 
 def search_movies(search_term):
-    query = f"SELECT * FROM movie WHERE title LIKE {search_term} OR genre LIKE {search_term}"
+    query = f"SELECT * FROM movie WHERE name LIKE '%{search_term}%'"
     return query_db(query)
 
 def get_user_by_id(id):
