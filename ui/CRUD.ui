@@ -71,23 +71,6 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QPushButton" name="searchBtn">
-          <property name="minimumSize">
-           <size>
-            <width>100</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color:rgb(255, 255, 255);
-font: 700 10pt &quot;Segoe UI&quot;;</string>
-          </property>
-          <property name="text">
-           <string>SEARCH</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QLineEdit" name="searchEdit">
           <property name="styleSheet">
            <string notr="true">font: 700 10pt &quot;Segoe UI&quot;;
@@ -242,7 +225,7 @@ border-radius:10px</string>
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>80</y>
+      <y>140</y>
       <width>51</width>
       <height>50</height>
      </rect>
@@ -286,7 +269,7 @@ border-radius:10px</string>
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>140</y>
+      <y>200</y>
       <width>51</width>
       <height>50</height>
      </rect>
@@ -330,6 +313,51 @@ border-radius:10px</string>
     </property>
     <property name="toolButtonStyle">
      <enum>Qt::ToolButtonTextBesideIcon</enum>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="homeBtn">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>80</y>
+      <width>50</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>0</width>
+      <height>50</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-radius:10px;
+background-color:rgb(255, 255, 255)</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../img/house-solid.svg</normaloff>../img/house-solid.svg</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>25</width>
+      <height>25</height>
+     </size>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="autoExclusive">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>

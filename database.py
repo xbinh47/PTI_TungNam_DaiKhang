@@ -19,6 +19,10 @@ def getMovieByID(id):
     query = f"SELECT * FROM movie WHERE id = {id}"
     return query_db(query)[0]
 
+# def search_movies(search_term):
+#     search_term = f"%{search_term}%"
+#     query = "SELECT * FROM movie WHERE name LIKE ? OR genre LIKE ?"
+#     return query_db(query, (search_term, search_term))
 
 def add_movie(name, release_date, genre, img):
     query = f"INSERT INTO movie (name, release_date, genre, img) VALUES ('{name}', '{release_date}', '{genre}', '{img}')"

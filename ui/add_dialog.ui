@@ -59,6 +59,7 @@
            <property name="font">
             <font>
              <pointsize>10</pointsize>
+             <bold>true</bold>
             </font>
            </property>
            <property name="text">
@@ -84,7 +85,7 @@
         <item>
          <widget class="QLabel" name="genreLabel">
           <property name="text">
-           <string>TextLabel</string>
+           <string> New Genre                            </string>
           </property>
          </widget>
         </item>
@@ -175,7 +176,7 @@
          <item>
           <widget class="QLabel" name="imageText">
            <property name="text">
-            <string>TextLabel</string>
+            <string>link</string>
            </property>
           </widget>
          </item>
@@ -196,6 +197,7 @@
            <property name="font">
             <font>
              <pointsize>10</pointsize>
+             <bold>true</bold>
             </font>
            </property>
            <property name="text">
@@ -248,14 +250,20 @@
          <item>
           <widget class="QLabel" name="videoText">
            <property name="text">
-            <string>TextLabel</string>
+            <string>link</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QToolButton" name="videoBtn">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+             <bold>true</bold>
+            </font>
+           </property>
            <property name="text">
-            <string>...</string>
+            <string>Browse</string>
            </property>
           </widget>
          </item>
@@ -267,6 +275,7 @@
         <property name="font">
          <font>
           <pointsize>10</pointsize>
+          <bold>true</bold>
          </font>
         </property>
         <property name="orientation">

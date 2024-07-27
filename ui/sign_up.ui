@@ -21,7 +21,7 @@ background-color: rgb(0, 0, 0)</string>
    <widget class="QWidget" name="widget" native="true">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>20</x>
       <y>50</y>
       <width>371</width>
       <height>500</height>
@@ -111,7 +111,7 @@ padding-left: 10px</string>
       <rect>
        <x>50</x>
        <y>270</y>
-       <width>261</width>
+       <width>221</width>
        <height>41</height>
       </rect>
      </property>
@@ -126,6 +126,9 @@ padding-left: 10px</string>
 color: rgb(0, 0, 0);
 border radius: 10px;
 padding-left: 10px</string>
+     </property>
+     <property name="echoMode">
+      <enum>QLineEdit::Password</enum>
      </property>
      <property name="placeholderText">
       <string>Password</string>
@@ -198,6 +201,9 @@ color: rgb(0, 0, 0);
 border radius: 10px;
 padding-left: 10px</string>
      </property>
+     <property name="echoMode">
+      <enum>QLineEdit::Password</enum>
+     </property>
      <property name="placeholderText">
       <string>Confirm Password</string>
      </property>
@@ -227,33 +233,11 @@ padding-left: 10px</string>
       <string>Username</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_3">
-     <property name="geometry">
-      <rect>
-       <x>280</x>
-       <y>450</y>
-       <width>131</width>
-       <height>181</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border-radius: 10px;</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap>../img/leaves diagonal1.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
     <widget class="QLabel" name="label_4">
      <property name="geometry">
       <rect>
-       <x>280</x>
-       <y>-20</y>
+       <x>220</x>
+       <y>-30</y>
        <width>121</width>
        <height>91</height>
       </rect>
@@ -293,8 +277,8 @@ padding-left: 10px</string>
     <widget class="QLabel" name="label_6">
      <property name="geometry">
       <rect>
-       <x>-30</x>
-       <y>410</y>
+       <x>90</x>
+       <y>440</y>
        <width>131</width>
        <height>181</height>
       </rect>
@@ -307,28 +291,6 @@ padding-left: 10px</string>
      </property>
      <property name="pixmap">
       <pixmap>../img/leaves diagonal1.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_7">
-     <property name="geometry">
-      <rect>
-       <x>-10</x>
-       <y>-20</y>
-       <width>131</width>
-       <height>111</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border-radius: 10px;</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap>../img/leaves diagonal2.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -360,7 +322,7 @@ padding-left: 10px</string>
      <property name="geometry">
       <rect>
        <x>300</x>
-       <y>280</y>
+       <y>370</y>
        <width>151</width>
        <height>81</height>
       </rect>
@@ -394,6 +356,52 @@ padding-left: 10px</string>
       <bool>true</bool>
      </property>
     </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>-60</x>
+       <y>30</y>
+       <width>101</width>
+       <height>111</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius: 10px;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../img/leaves diagonal1.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="eyeBtn">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>270</y>
+       <width>41</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(225, 225, 225);
+color: rgb(0, 0, 0);
+border radius: 10px;
+padding-left: 10px</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../img/eye-solid.svg</normaloff>../img/eye-solid.svg</iconset>
+     </property>
+    </widget>
+    <zorder>label_3</zorder>
     <zorder>label_16</zorder>
     <zorder>label_15</zorder>
     <zorder>label_8</zorder>
@@ -407,9 +415,31 @@ padding-left: 10px</string>
     <zorder>btnLogin</zorder>
     <zorder>txtConfirmPass</zorder>
     <zorder>txtname</zorder>
-    <zorder>label_3</zorder>
     <zorder>label_4</zorder>
-    <zorder>label_7</zorder>
+    <zorder>eyeBtn</zorder>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>50</y>
+      <width>361</width>
+      <height>501</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border_radius:10px
+</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../img/app_poster.webp</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
    </widget>
   </widget>
  </widget>

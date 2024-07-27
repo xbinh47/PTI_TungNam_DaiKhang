@@ -164,26 +164,6 @@ border-radius:10px</string>
        </layout>
       </widget>
      </item>
-     <item>
-      <widget class="QScrollArea" name="movieList">
-       <property name="styleSheet">
-        <string notr="true">background-color:rgb(0, 0, 0);</string>
-       </property>
-       <property name="widgetResizable">
-        <bool>true</bool>
-       </property>
-       <widget class="QWidget" name="scrollAreaWidgetContents">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>949</width>
-          <height>583</height>
-         </rect>
-        </property>
-       </widget>
-      </widget>
-     </item>
     </layout>
    </widget>
    <widget class="QWidget" name="widget_2" native="true">

@@ -1,15 +1,13 @@
 import sys
 from PyQt6 import QtCore
 from PyQt6 import QtWidgets
-from PyQt6.QtWidgets import QApplication, QMainWindow, QFileDialog, QDialog
+from PyQt6.QtWidgets import  QMainWindow, QFileDialog, QDialog
 from PyQt6.QtWidgets import  QLabel, QSlider, QWidget, QPushButton, QToolButton, QLineEdit, QScrollArea, QGridLayout, QSizePolicy, QDateEdit, QDialogButtonBox, QMessageBox
 from PyQt6.QtMultimedia import QMediaPlayer, QAudioOutput
 from PyQt6.QtMultimediaWidgets import QVideoWidget
 from PyQt6.QtCore import QUrl
 from PyQt6.QtGui import QIcon, QPixmap, QImage
 from PyQt6 import uic
-import cloudinary.uploader
-from cloudinary_config import cloudinary
 import database
 import requests
 from cloudinary_config import upload_image, upload_video
@@ -20,16 +18,37 @@ class Register(QtWidgets.QMainWindow):
         super().__init__()
         uic.loadUi("ui/sign_up.ui", self)
         self.name = ""
-
+        self.check = 0
         self.btnSignUp = self.findChild(QPushButton, "btnSignUp")
         self.btnLogin = self.findChild(QPushButton, "btnLogin")
         self.txtname = self.findChild(QLineEdit, "txtname")
         self.txtEmail = self.findChild(QLineEdit, "txtEmail")
         self.txtPass = self.findChild(QLineEdit, "txtPass")
         self.txtConfirmPass = self.findChild(QLineEdit, "txtConfirmPass")
+        self.eyeBtn = self.findChild(QPushButton, "eyeBtn")
         
         self.btnSignUp.clicked.connect(self.register)
         self.btnLogin.clicked.connect(self.showLoginPage)
+        self.eyeBtn.clicked.connect(self.changeMode)
+        self.init_ui()
+
+    def init_ui(self):
+        self.eyeIcon = QIcon("img\eye-solid.svg")
+        self.eyeSlashIcon = QIcon("img\eye-slash-solid.svg")
+
+        self.eyeBtn.setIcon(self.eyeIcon)
+
+    def changeMode(self):
+        if self.check == 0:
+            self.eyeBtn.setIcon(self.eyeSlashIcon)
+            self.txtPass.setEchoMode(QLineEdit.EchoMode.Normal)
+            self.txtConfirmPass.setEchoMode(QLineEdit.EchoMode.Normal)
+            self.check = 1
+        elif self.check == 1:
+            self.eyeBtn.setIcon(self.eyeIcon)
+            self.txtPass.setEchoMode(QLineEdit.EchoMode.Password)
+            self.txtConfirmPass.setEchoMode(QLineEdit.EchoMode.Password)
+            self.check = 0
 
     def register(self):
         self.name = self.txtname.text()
@@ -88,14 +107,33 @@ class Login(QtWidgets.QMainWindow):
         super().__init__() #call out the characters of ParentClass
         uic.loadUi("ui/sign_in.ui", self) #Create and load the file ui
         self.name = ""
-
+        self.check = 0
         self.btn_login = self.findChild(QPushButton, "btn_login")
         self.btn_register = self.findChild(QPushButton, "btn_register")
         self.txtEmail = self.findChild(QLineEdit, "txtEmail")
         self.txtPass = self.findChild(QLineEdit, "txtPass")
+        self.eyeBtn = self.findChild(QPushButton, "eyeBtn")
 
         self.btn_login.clicked.connect(self.checkLogin)
         self.btn_register.clicked.connect(self.showRegisterPage)
+        self.eyeBtn.clicked.connect(self.changeMode)
+        self.init_ui()
+
+    def init_ui(self):
+        self.eyeIcon = QIcon("img\eye-solid.svg")
+        self.eyeSlashIcon = QIcon("img\eye-slash-solid.svg")
+
+        self.eyeBtn.setIcon(self.eyeIcon)
+
+    def changeMode(self):
+        if self.check == 0:
+            self.eyeBtn.setIcon(self.eyeSlashIcon)
+            self.txtPass.setEchoMode(QLineEdit.EchoMode.Normal)
+            self.check = 1
+        elif self.check == 1:
+            self.eyeBtn.setIcon(self.eyeIcon)
+            self.txtPass.setEchoMode(QLineEdit.EchoMode.Password)
+            self.check = 0
 
     def checkLogin(self):
         email = self.txtEmail.text()
@@ -121,6 +159,7 @@ class Login(QtWidgets.QMainWindow):
         
         success_box.setText("Succesfully Login!")
         success_box.exec()
+        self.close()
         self.showMainPage(result[0][0])
 
     def showRegisterPage(self):
@@ -129,9 +168,9 @@ class Login(QtWidgets.QMainWindow):
         self.close()
         
     def showMainPage(self, id):
-        self.main = MovieList(id)
+        self.main = Home(id)
         self.main.show()
-        self.close()
+
 
 class UserInfo(QtWidgets.QMainWindow):
     def __init__(self, id):
@@ -146,7 +185,7 @@ class UserInfo(QtWidgets.QMainWindow):
         self.txtAddress = self.findChild(QLineEdit, 'txtAddress')
         self.txtCountry = self.findChild(QLineEdit, 'txtCountry')
         self.movieListBtn = self.findChild(QPushButton, 'movieListBtn')
-        self.txtPass = self.findChild(QLineEdit,)
+        self.txtPass = self.findChild(QLineEdit, 'txtPass')
         self.saveBtn.clicked.connect(self.updateInfo)
         self.loadData()
         self.avatar = ""
@@ -163,7 +202,7 @@ class UserInfo(QtWidgets.QMainWindow):
         self.txtCountry.setText(result[6])
         if result[7]:
             self.avatar = result[7]
-            self.avatarLabel.setPixmap(QtWidgets.QPixmap(result[7]))
+            self.avatarBtn.setIcon(QIcon(result[7]))
         
     def loadAvatarImage(self):
         file, _ = QtWidgets.QFileDialog.getOpenFileName(self, "Select Image", "", "Image Files (*.png *.jpg *jpeg *.bmp)")
@@ -179,10 +218,13 @@ class UserInfo(QtWidgets.QMainWindow):
         nationality = self.txtCountry.text()
         avatar = self.avatar
         database.update_user(self.id, email, username, phone, address, nationality, avatar)
+        success_box.setText("Successfully updated your personal information!")
+        success_box.exec()
         self.loadData()
+        self.showMainPage()
         
     def showMainPage(self):
-        self.main = MovieList(self.id)
+        self.main = Home(self.id)
         self.main.show()
         self.close()
 
@@ -225,7 +267,7 @@ class MovieItemWidget(QWidget):
         self.navigate_to_watch.emit(self.id)
 
 class CRUDItemWidget(QWidget):
-    def __init__(self, id, name, release_date, genre, img):
+    def __init__(self, id, name, release_date, genre, img,  crud_page=None, movie_list_page=None):
         super().__init__()
         uic.loadUi("ui/crudItem.ui", self)
         self.id = id
@@ -240,6 +282,9 @@ class CRUDItemWidget(QWidget):
         self.movieView = self.findChild(QLabel, 'movieView')
         self.editBtn = self.findChild(QPushButton, 'editBtn')
         self.removeBtn = self.findChild(QPushButton, 'removeBtn')
+
+        self.crud_page = crud_page
+        self.movie_list_page = movie_list_page
 
         self.editBtn.clicked.connect(self.editMovie)
         self.removeBtn.clicked.connect(self.removeMovie)
@@ -266,7 +311,12 @@ class CRUDItemWidget(QWidget):
         query = f"DELETE FROM movie WHERE id = {self.id} "
         database.execute_db(query)
         self.setParent(None)
-
+        success_box.setText("Movie successfully deleted.")
+        success_box.exec()
+        if self.crud_page:
+            self.crud_page.renderMovie()
+        if self.movie_list_page:
+            self.movie_list_page.renderMovie()
 
 # The Dialogs:
 class AddMovieDialog(QDialog):
@@ -287,8 +337,8 @@ class AddMovieDialog(QDialog):
         
         self.imageBtn.clicked.connect(self.uploadImage)
         self.videoBtn.clicked.connect(self.uploadVideo)
-        self.buttonBox.accepted.connect(self.accept)
-        # self.buttonBox.rejected.connect(self.reject)
+        self.buttonBox.accepted.connect(self.accept_add)
+        self.buttonBox.rejected.connect(self.reject)
 
     def uploadImage(self):
         fileName, _ = QFileDialog.getOpenFileName(self, "Select Image", "", "Image Files (*.png *.jpg *.bmp)")
@@ -304,9 +354,9 @@ class AddMovieDialog(QDialog):
             self.videoFile = response
             self.videoText.setText(response)
 
-    def accept(self):
+    def accept_add(self):
         name = self.titleEdit.text()
-        release_date = self.releaseDateEdit.date().toString('yyyy-MM-dd')
+        release_date = self.releaseDateEdit.date().toString('dd/MM/yyyy')
         genre = self.genreEdit.text()
         
         if name and release_date and genre and self.imageFile and self.videoFile:
@@ -340,7 +390,7 @@ class EditMovieDialog(QDialog):
         
         self.imageBtn.clicked.connect(self.uploadImage)
         self.videoBtn.clicked.connect(self.uploadVideo)
-        self.buttonBox.accepted.connect(self.accept)
+        self.buttonBox.accepted.connect(self.accept_edit)
         self.buttonBox.rejected.connect(self.reject)
         
         self.loadMovieData()
@@ -350,9 +400,11 @@ class EditMovieDialog(QDialog):
         if movie:
             self.titleEdit.setText(movie[1])
             self.videoText.setText(movie[2])
-            release_date = QtCore.QDate.fromString(movie[3], 'yyyy-MM-dd')
+            self.release_date = QtCore.QDate.fromString(movie[3], 'dd/MM/yyyy')
             self.genreEdit.setText(movie[4])
             self.imageText.setText(movie[5])
+            self.imageFile = movie[5]
+            self.videoFile = movie[2]
 
     def uploadImage(self):
         fileName, _ = QFileDialog.getOpenFileName(self, "Select Image", "", "Image Files (*.png *.jpg *.bmp)")
@@ -368,9 +420,9 @@ class EditMovieDialog(QDialog):
             self.videoFile = response
             self.videoText.setText(response)
 
-    def accept(self):
+    def accept_edit(self):
         name = self.titleEdit.text()
-        release_date = self.releaseDateEdit.date().toString('yyyy-MM-dd')
+        release_date = self.releaseDateEdit.date().toString('dd/MM/yyyy')
         genre = self.genreEdit.text()
         
         if name and release_date and genre and self.imageFile and self.videoFile:
@@ -380,6 +432,15 @@ class EditMovieDialog(QDialog):
             success_box.setText("Movie updated.")
             success_box.exec()
             self.close()
+
+        if self.crud_page:
+            self.crud_page.renderMovie()
+        if self.movie_list_page:
+            self.movie_list_page.renderMovie()
+        else:
+            error_box = QMessageBox()
+            error_box.setText("Please fill all fields and upload the thumbnail image!")
+            error_box.exec()
 
 class MovieList(QMainWindow):
     def __init__(self, id):
@@ -398,6 +459,8 @@ class MovieList(QMainWindow):
 
         self.CRUDButton.clicked.connect(self.CRUDShow)
         self.userBtn.clicked.connect(self.UserShow)
+        self.homeBtn.clicked.connect(self.HomeShow)
+        self.searchEdit.textChanged.connect(self.searchMovie)
 
         self.movieItem = QWidget()
         self.gridLayout = QGridLayout(self.movieItem)
@@ -413,7 +476,10 @@ class MovieList(QMainWindow):
 
     def searchMovie(self):
         search_term = self.searchEdit.text()
-        movieList = database.search_movies(search_term)
+        if search_term:
+            movieList = database.search_movies(search_term)
+        else:
+            movieList = database.query_db("SELECT * FROM movie")
         self.renderMovie(movieList)
 
     def renderMovie(self, movieList=None):
@@ -446,9 +512,10 @@ class MovieList(QMainWindow):
         self.CRUD = CRUD(self.id)
         self.CRUD.show()
         self.close()
-    # def HomeShow(self):
-    #     HomePage.show()
-    #     self.close()
+    def HomeShow(self):
+        self.home = Home(self.id)
+        self.home.show()
+        self.close()
     def UserShow(self):
         self.user = UserInfo(self.id)
         self.user.show()
@@ -468,13 +535,12 @@ class CRUD(QMainWindow):
         self.userBtn = self.findChild(QPushButton, 'userBtn')
         self.CRUDButton = self.findChild(QPushButton, 'CRUDButton')
         self.addBtn = self.findChild(QPushButton, 'addBtn')
-        self.searchBtn = self.findChild(QPushButton, 'searchBtn')
         self.searchEdit = self.findChild(QLineEdit, 'searchEdit')
         self.CRUDList = self.findChild(QScrollArea, 'CRUDList')
 
         self.addBtn.clicked.connect(self.addMovie)
-        self.searchBtn.clicked.connect(self.searchMovie)
-        # self.homeBtn.clicked.connect(self.HomeShow)
+        self.searchEdit.textChanged.connect(self.searchMovie)
+        self.homeBtn.clicked.connect(self.HomeShow)
         self.listBtn.clicked.connect(self.ListShow)
         self.userBtn.clicked.connect(self.UserShow)
 
@@ -496,8 +562,11 @@ class CRUD(QMainWindow):
 
     def searchMovie(self):
         search_term = self.searchEdit.text()
-        movieList = database.search_movies(search_term)
-        self.displayMovies(movieList)
+        if search_term:
+            movieList = database.search_movies(search_term)
+        else:
+            movieList = database.query_db("SELECT * FROM movie")
+        self.renderMovie(movieList)
 
     def refreshMovieList(self):
         self.renderMovie()
@@ -528,24 +597,42 @@ class CRUD(QMainWindow):
         self.movieList = MovieList(self.id)
         self.movieList.show()
         self.close()
-    # def HomeShow(self):
-    #     HomePage.show()
-    #     self.close()
+    def HomeShow(self):
+        self.home = Home(self.id)
+        self.home.show()
+        self.close()
     def UserShow(self):
         self.user = UserInfo(self.id)
         self.user.show()
         self.close()
 
 class Home(QMainWindow):
-    def __init__(self):
+    def __init__(self,id):
         super().__init__()
         uic.loadUi("ui/home.ui", self)
-        self.homeBtn = self.findChild(QPushButton, 'homeBtn')
-        self.exitBtn = self.findChild(QPushButton, 'exitBtn')
-        self.helpButton = self.findChild(QPushButton, 'helpBtn')
-        self.OptBtn = self.findChild(QPushButton, 'OptBtn')
+        self.id = id
+        self.listBtn = self.findChild(QPushButton, 'listBtn')
         self.userBtn = self.findChild(QPushButton, 'userBtn')
-        self.CRUDButton = self.findChild(QPushButton, 'CRUDButton')
+        self.CRUDButton = self.findChild(QToolButton, 'CRUDButton')
+
+        self.listBtn.clicked.connect(self.showListPage)
+        self.userBtn.clicked.connect(self.User)
+        self.CRUDButton.clicked.connect(self.CRUDShow)
+
+    def showListPage (self):
+        self.list = MovieList(self.id)
+        self.list.show()
+        self.close()
+
+    def User (self):
+        self.user = UserInfo(self.id)
+        self.user.show()
+        self.close()
+    
+    def CRUDShow (self):
+        self.crud = CRUD(self.id)
+        self.crud.show()
+        self.close()
 
 class Watch(QMainWindow):
     def __init__(self, movie_id, list_page):
@@ -569,6 +656,7 @@ class Watch(QMainWindow):
         self.videoName = self.findChild(QLabel, 'videoName')
 
         self.listBtn.clicked.connect(self.showListPage)
+        self.homeBtn.clicked.connect(self.HomeShow)
 
         # Create a QVideoWidget object
         placeholder = self.findChild(QWidget, 'videoWidget')
@@ -704,9 +792,15 @@ class Watch(QMainWindow):
         return f"{hours:02}:{minutes:02}:{seconds:02}"
 
     def showListPage(self):
+        self.list_page = MovieList()
         self.list_page.show()
         self.close()
 
+    def HomeShow(self):
+        self.home = Home(self)
+        self.home.show()
+        self.close()
+    
     def closeEvent(self, event):
         self.mediaPlayer.stop()
         event.accept()
@@ -715,9 +809,7 @@ if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     
     login = Login()
-    # login.show()
-    movieList = MovieList(1)
-    movieList.show()
+    login.show()
 
     err_box = QMessageBox()
     err_box.setWindowTitle("Error.")
