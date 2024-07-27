@@ -639,7 +639,6 @@ class Watch(QMainWindow):
         super().__init__()
         
         uic.loadUi("ui/watch.ui", self)
-
         self.movie_id = movie_id
         self.list_page = list_page
 
@@ -792,7 +791,6 @@ class Watch(QMainWindow):
         return f"{hours:02}:{minutes:02}:{seconds:02}"
 
     def showListPage(self):
-        self.list_page = MovieList(self)
         self.list_page.show()
         self.close()
 

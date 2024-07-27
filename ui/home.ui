@@ -251,7 +251,7 @@ border-radius:10px</string>
 font: 700 11pt &quot;Segoe UI&quot;;</string>
     </property>
     <property name="text">
-     <string>WELCOME TO INTERTEN - A SOCIAL MOVIE PLATFORM                                                     Our App</string>
+     <string>WELCOME TO INTERTEN - A SOCIAL MOVIE PLATFORM                                                          Our App</string>
     </property>
    </widget>
    <widget class="QLabel" name="poster">
