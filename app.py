@@ -721,7 +721,7 @@ class Watch(QMainWindow):
         except Exception as e:
             print(f"Error loading video: {e}")
 
-    def mediaStateChanged(self, state):
+    def mediaStateChanged(self):
         if self.mediaPlayer.playbackState() == QMediaPlayer.PlaybackState.PlayingState:
             self.playBtn.setIcon(self.pauseIcon)
         else:
@@ -792,7 +792,7 @@ class Watch(QMainWindow):
         return f"{hours:02}:{minutes:02}:{seconds:02}"
 
     def showListPage(self):
-        self.list_page = MovieList()
+        self.list_page = MovieList(self)
         self.list_page.show()
         self.close()
 
