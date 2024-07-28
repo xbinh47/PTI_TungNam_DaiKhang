@@ -12,7 +12,7 @@ import database
 import requests
 from cloudinary_config import upload_image, upload_video
 
-# The Widgets:
+# The Widgets:10
 class Register(QtWidgets.QMainWindow):
     def __init__ (self):
         super().__init__()
@@ -535,9 +535,10 @@ class CRUD(QMainWindow):
         self.addBtn = self.findChild(QPushButton, 'addBtn')
         self.searchEdit = self.findChild(QLineEdit, 'searchEdit')
         self.CRUDList = self.findChild(QScrollArea, 'CRUDList')
+        self.searchBtn = self.findChild(QPushButton, 'searchBtn')
 
         self.addBtn.clicked.connect(self.addMovie)
-        self.searchEdit.textChanged.connect(self.searchMovie)
+        self.searchBtn.clicked.connect(self.searchMovie)
         self.homeBtn.clicked.connect(self.HomeShow)
         self.listBtn.clicked.connect(self.ListShow)
         self.userBtn.clicked.connect(self.UserShow)
@@ -753,9 +754,11 @@ class Watch(QMainWindow):
         if volume == 0.0:
             self.volumeBtn.setIcon(self.volumeOffIcon)
         elif volume < 0.5:
+            self.audioOutput.setMuted(False)
             self.volumeBtn.setIcon(self.volumeLowIcon)
         else:
             self.volumeBtn.setIcon(self.volumeHighIcon)
+            self.audioOutput.setMuted(False)
     
     def toggleMute(self):
         if self.audioOutput.isMuted():
