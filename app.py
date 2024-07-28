@@ -267,7 +267,7 @@ class MovieItemWidget(QWidget):
         self.navigate_to_watch.emit(self.id)
 
 class CRUDItemWidget(QWidget):
-    def __init__(self, id, name, release_date, genre, img,  crud_page=None, movie_list_page=None):
+    def __init__(self, id, name, release_date, genre, img,  crud_page=None):
         super().__init__()
         uic.loadUi("ui/crudItem.ui", self)
         self.id = id
@@ -284,8 +284,6 @@ class CRUDItemWidget(QWidget):
         self.removeBtn = self.findChild(QPushButton, 'removeBtn')
 
         self.crud_page = crud_page
-        self.movie_list_page = movie_list_page
-
         self.editBtn.clicked.connect(self.editMovie)
         self.removeBtn.clicked.connect(self.removeMovie)
         self.init()
@@ -303,7 +301,7 @@ class CRUDItemWidget(QWidget):
         self.setMinimumWidth(300)
 
     def editMovie(self):
-        dialog = EditMovieDialog(self.id)
+        dialog = EditMovieDialog(self.id, self.crud_page)
         if dialog.exec() == QDialog.DialogCode.Accepted:
             self.init()
 
@@ -315,8 +313,6 @@ class CRUDItemWidget(QWidget):
         success_box.exec()
         if self.crud_page:
             self.crud_page.renderMovie()
-        if self.movie_list_page:
-            self.movie_list_page.renderMovie()
 
 # The Dialogs:
 class AddMovieDialog(QDialog):
@@ -372,10 +368,10 @@ class AddMovieDialog(QDialog):
             err_box.exec()
 
 class EditMovieDialog(QDialog):
-    def __init__(self, movie_id):
+    def __init__(self, movie_id, crud_page=None):
         super().__init__()
         uic.loadUi("ui/add_dialog.ui", self)
-        
+        self.crud_page = crud_page
         self.movie_id = movie_id
         self.titleEdit = self.findChild(QLineEdit, 'titleEdit')
         self.releaseDateEdit = self.findChild(QDateEdit, 'releaseDateEdit')
@@ -429,14 +425,10 @@ class EditMovieDialog(QDialog):
             # Add to the database
             query = f"UPDATE movie SET name = '{name}', release_date = '{release_date}', genre = '{genre}', img = '{self.imageFile}', link = '{self.videoFile}' WHERE id = {self.movie_id}"
             database.execute_db(query)
+            self.crud_page.renderMovie()
             success_box.setText("Movie updated.")
             success_box.exec()
             self.close()
-
-        if self.crud_page:
-            self.crud_page.renderMovie()
-        if self.movie_list_page:
-            self.movie_list_page.renderMovie()
         else:
             error_box = QMessageBox()
             error_box.setText("Please fill all fields and upload the thumbnail image!")
